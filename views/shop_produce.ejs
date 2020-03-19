@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Shop Produce</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="stylesheets/css/index.css" rel="stylesheet">
+
+</head>
+
+<body>
+  <!-- Navigation -->
+  <header><% include partials/header %> </header>
+  <!-- Here is our page's main content -->
+  
+  
+  <main>
+    <!-- It contains an article -->
+    <article>
+      <h2>Article heading</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Donec a diam lectus. Set sit amet ipsum mauris.
+        Maecenas congue ligula as quam viverra nec consectetur ant hendrerit. Donec et mollis dolor.
+      </p>
+
+      <h4>Select Produce</h4>
+      <label>Available for delivery on</label>  <input type="date" id="start" name="trip-start" value="2018-07-22" min="2018-01-01" max="2018-12-31">
+
+      <h4>Contracted Items</h4>
+      <hr>
+      <p>You do not currently have any contracted items. Contact Sales via chat or by calling ______, to learn how to get guaranteed pricing on supply.
+      </p>
+
+      <h4>Contracted Items</h4>
+      
+      <div class="row">
+        <% include partials/item.ejs %>
+        <% include partials/item.ejs %>
+        <% include partials/item.ejs %>
+        <% include partials/item.ejs %>
+        <% include partials/item.ejs %>
+        <% include partials/item.ejs %>
+    </div>
+      <!-- <div class="card-deck"> -->
+
+      <!-- </div> -->
+
+
+    </article>
+  </main>
+
+</body>
