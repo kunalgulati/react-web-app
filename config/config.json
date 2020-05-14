@@ -1,10 +1,11 @@
 {
   "development": {
-    "username": "$kunalgulati",
+    "username": "kunalgulati",
     "password": "forkcha",
     "database": "forkcha",
-    "host": "localhost",
+    "host": "127.0.0.1",
     "dialect": "postgres",
+    "storage": "database.postgresql",
     "operatorsAliases": false
   },
   "test": {
@@ -24,4 +25,3 @@
     "operatorsAliases": false
   }
 }
-

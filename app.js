@@ -2,8 +2,16 @@ var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
+
 var cookieParser = require('cookie-parser');
+const { ApolloServer } = require('apollo-server-express');
+
+
 var bodyParser = require('body-parser');
+var typeDefs = require('./graphql/schema');
+const resolvers = require('./database/resolvers')
+const mutations = require('./database/mutations')
+
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -23,13 +31,35 @@ app.set('view engine', 'ejs');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
+
 app.use(cookieParser());
+// app.use(session({
+//   secret: 'kunal123',
+//   resave: true,
+//   saveUninitialized: false,
+//   store: new 
+
+// }));
+
+
+
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
 app.use('/register', registerRouter);
 app.use('/shop_produce', shopProduceRouter);
+
+
+// ****** GRAPHQL START ******* //
+
+const server = new ApolloServer({ typeDefs, resolvers });
+server.applyMiddleware({ app, path: '/graphql' });
+
+// ****** GRAPHQL END ******* //
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -48,5 +78,9 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+
+
+
 
 module.exports = app;
