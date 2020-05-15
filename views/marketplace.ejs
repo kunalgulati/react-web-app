@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Market Place</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="stylesheets/index.css" rel="stylesheet" type="text/css">
+  <link href="stylesheets/marketplace.css" rel="stylesheet" type="text/css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="javascripts/marketplace.js" type="text/javascript"></script>
+
+
+
+
+</head>
+
+<body>
+  <!-- Navigation -->
+  <header><% include partials/header %> </header>
+  <br>
+  <!-- Here is our page's main content -->
+
+
+  <main>
+    <!-- It contains an article -->
+
+    <!-- Filter -->
+    <section>
+      <h4>FILTER PRODUCE</h4>
+
+      <!-- Place a .btn-group within another .btn-group when you want dropdown menus mixed with a series of buttons -->
+      <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+        <!-- Commodity -->
+        <div class="btn-group" role="group">
+          <button id="btnGroupDrop-commodity" type="button" onclick="showDropdown('commodity-dropdown')"
+            class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Commodity
+          </button>
+          <div class="dropdown-menu" aria-labelledby="btnGroupDrop-commodity" id="commodity-dropdown">
+            <input type="text" placeholder="Search.." id="commodity-input"
+              onkeyup="filterFunction(this.id, 'commodity-dropdown')">
+          </div>
+        </div>
+      </div>
+
+      <!-- certification -->
+      <div class="btn-group" role="group">
+        <button id="btnGroupDrop-certification" type="button" onclick="showDropdown('certification-dropdown')"
+          class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Certification
+        </button>
+        <div class="dropdown-menu" aria-labelledby="btnGroupDrop-certification" id="certification-dropdown">
+          <input type="text" placeholder="Search.." id="certification-input"
+            onkeyup="filterFunction(this.id, 'certification-dropdown')">
+        </div>
+      </div>
+      </div>
+
+      <!-- Grade -->
+      <div class="btn-group" role="group">
+        <button id="btnGroupDrop-grade" type="button" onclick="showDropdown('grade-dropdown')"
+          class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Grade
+        </button>
+        <div class="dropdown-menu" aria-labelledby="btnGroupDrop-grade" id="grade-dropdown">
+          <input type="text" placeholder="Search.." id="grade-input"
+            onkeyup="filterFunction(this.id, 'grade-dropdown')">
+        </div>
+      </div>
+      </div>
+
+      <!-- Package Type -->
+      <div class="btn-group" role="group">
+        <button id="btnGroupDrop-packageType" type="button" onclick="showDropdown('packageType-dropdown')"
+          class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Package Type
+        </button>
+        <div class="dropdown-menu" aria-labelledby="btnGroupDrop-packageType" id="packageType-dropdown">
+          <input type="text" placeholder="Search.." id="packageType-input"
+            onkeyup="filterFunction(this.id, 'packageType-dropdown')">
+        </div>
+      </div>
+      </div>
+
+      <!-- Location -->
+      <div class="btn-group" role="group">
+        <button id="btnGroupDrop-location" type="button" onclick="showDropdown('location-dropdown')"
+          class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Location
+        </button>
+        <div class="dropdown-menu" aria-labelledby="btnGroupDrop-location" id="location-dropdown">
+          <input type="text" placeholder="Search.." id="location-input"
+            onkeyup="filterFunction(this.id, 'location-dropdown')">
+        </div>
+      </div>
+      </div>
+
+    </section>
+
+    <article style="margin-top: 5%;">
+      <div id="test"> 
+      </div>
+      
+    </article>
+
+  </main>
+
+</body>
+
+<script>
+  $(".commodityDropdown a").click(function () {
+    $(this).closest(".commodityDropdown").prev().dropdown("toggle");
+  });
+</script>

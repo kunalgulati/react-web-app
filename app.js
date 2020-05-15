@@ -14,10 +14,8 @@ const resolvers = require('./database/resolvers')
 
 var index = require('./routes/index');
 var users = require('./routes/users');
-// Buyer
 var registerRouter = require('./routes/register');
-// Shop Produce
-var shopProduceRouter = require('./routes/shop_produce');
+var marketplaceRouter = require('./routes/marketplace');
 
 var app = express();
 
@@ -49,7 +47,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/users', users);
 app.use('/register', registerRouter);
-app.use('/shop_produce', shopProduceRouter);
+app.use('/marketplace', marketplaceRouter);
 
 
 // ****** GRAPHQL START ******* //
