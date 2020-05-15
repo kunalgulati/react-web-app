@@ -10,7 +10,6 @@ const { ApolloServer } = require('apollo-server-express');
 var bodyParser = require('body-parser');
 var typeDefs = require('./graphql/schema');
 const resolvers = require('./database/resolvers')
-const mutations = require('./database/mutations')
 
 
 var index = require('./routes/index');
