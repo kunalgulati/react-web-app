@@ -55,7 +55,7 @@ app.use('/shop_produce', shopProduceRouter);
 
 // ****** GRAPHQL START ******* //
 
-const server = new ApolloServer({ typeDefs, resolvers });
+const server = new ApolloServer( {typeDefs, resolvers });
 server.applyMiddleware({ app, path: '/graphql' });
 
 // ****** GRAPHQL END ******* //
