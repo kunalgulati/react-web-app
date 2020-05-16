@@ -177,8 +177,10 @@ function populateLocation() {
 function loadProduct(){
   var element = document.getElementById('test');
 
-  element.innerHTML = element.innerHTML +
-    `<div class="card" style="width: 18rem;">
+  for(var i=0; i<7; i++){
+    element.innerHTML = element.innerHTML +
+
+  `<div class="card" style="width: 18rem;">
       <img class="card-img-top" src="..." alt="Card image cap">
       <div class="card-body">
         <h5 class="card-title">${Product[0].title}</h5>
@@ -193,21 +195,9 @@ function loadProduct(){
         <a href="#" class="card-link">Add to Cart</a>
         <a href="#" class="card-link">View More</a>
       </div>
-    </div>
-    <div class="card" style="width: 18rem;">
-      <img class="card-img-top" src="..." alt="Card image cap">
-      <div class="card-body">
-        <h5 class="card-title">${Product[0].title}</h5>
-        <p class="card-text">${Product[0].description.slice(0,100)} ... </p>
+        <div class="card-footer">
+        <small class="text-muted">Deliver is Available from ${Product[0].available}</small>
       </div>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">$ ${Product[0].price}/Kg</li>
-        <li class="list-group-item">${Product[0].minimumQuantity} Kg Min Order</li>
-        <li class="list-group-item">${Product[0].cityOfOrigin}, ${Product[0].provinceOfOrigin}</li>
-      </ul>
-      <div class="card-body">
-        <a href="#" class="card-link">Add to Cart</a>
-        <a href="#" class="card-link">View More</a>
-      </div>
-    </div>`;
+    </div>`
+  }
 }
