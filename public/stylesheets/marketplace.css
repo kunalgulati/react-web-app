@@ -68,4 +68,5 @@ body{
   @include media-breakpoint-only(xl) {
     column-count: 3;
   }
+
 }

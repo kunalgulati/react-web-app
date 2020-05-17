@@ -1,3 +1,26 @@
+// const temp = require('graphql');
+
+var query = `query{
+  getUsers{
+    name,
+    id
+  }
+}`;
+
+fetch('/graphql', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+  },
+  body: JSON.stringify({
+    query,
+    // variables: { dice, sides },
+  })
+})
+  .then(r => r.json())
+  .then(data => console.log('data returned:', data));
+
 const Commodity = [
   { id: 1, commodityName: "Apple", available: true },
   { id: 2, commodityName: "Mango", available: true },
@@ -33,6 +56,9 @@ const Location = [
   { id: 3, location: "North Vancouver" },
   { id: 4, location: "Kitslano" }
 ];
+
+
+
 
 const Product = [
   {
@@ -187,9 +213,9 @@ function loadProduct(){
         <p class="card-text">${Product[0].description.slice(0,100)} ... </p>
       </div>
       <ul class="list-group list-group-flush">
-        <li class="list-group-item">$ ${Product[0].price}/Kg</li>
-        <li class="list-group-item">${Product[0].minimumQuantity} Kg Min Order</li>
-        <li class="list-group-item">${Product[0].cityOfOrigin}, ${Product[0].provinceOfOrigin}</li>
+        <li class="list-group-item"><strong>Price: </strong> $${Product[0].price}/Kg</li>
+        <li class="list-group-item"><strong>Min Quantity:</strong>  ${Product[0].minimumQuantity} Kg (Per Order)</li>
+        <li class="list-group-item"><strong>Origin:</strong>  ${Product[0].cityOfOrigin}, ${Product[0].provinceOfOrigin}</li>
       </ul>
       <div class="card-body">
         <a href="#" class="card-link">Add to Cart</a>
