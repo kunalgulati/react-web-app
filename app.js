@@ -2,13 +2,15 @@ var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
+const dotenv = require('dotenv');
+dotenv.config();
 
 var cookieParser = require('cookie-parser');
 const { ApolloServer } = require('apollo-server-express');
 
 
 var bodyParser = require('body-parser');
-var typeDefs = require('./graphql/schema');
+var typeDefs = require('./graphql/schema.graphql');
 const resolvers = require('./database/resolvers')
 
 
@@ -51,8 +53,14 @@ app.use('/marketplace', marketplaceRouter);
 
 
 // ****** GRAPHQL START ******* //
-
-const server = new ApolloServer( {typeDefs, resolvers });
+const server = new ApolloServer( {
+  typeDefs, 
+  resolvers,
+  engine: {
+    apiKey: "service:forkcha:LReYdo78t37nii1vRmQ6eA",
+    graphVariant: process.env.NODE_ENV
+  }, 
+});
 server.applyMiddleware({ app, path: '/graphql' });
 
 // ****** GRAPHQL END ******* //
