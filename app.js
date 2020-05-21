@@ -10,8 +10,12 @@ const { ApolloServer } = require('apollo-server-express');
 
 
 var bodyParser = require('body-parser');
-var typeDefs = require('./graphql/schema.graphql');
+var typeDefs = require('./schema.graphql');
 const resolvers = require('./database/resolvers')
+// const LaunchAPI = require('./datasources/launch');
+// const UserAPI = require('./datasources/user');
+
+
 
 
 var index = require('./routes/index');
@@ -56,6 +60,10 @@ app.use('/marketplace', marketplaceRouter);
 const server = new ApolloServer( {
   typeDefs, 
   resolvers,
+  // dataSources: () => ({
+  //   launchAPI: new LaunchAPI(),
+  //   userAPI: new UserAPI({ store })
+  // }),
   engine: {
     apiKey: "service:forkcha:LReYdo78t37nii1vRmQ6eA",
     graphVariant: process.env.NODE_ENV
