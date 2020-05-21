@@ -1,8 +1,11 @@
+const dotenv = require('dotenv');
+dotenv.config();
+
 module.exports = {
   service: {
     // Must match the name of your graph in Graph Manager
     name: "forkcha",
-    service: 'LReYdo78t37nii1vRmQ6eA',
+    service: process.env.SERVICE_ID,
     // localSchemaFile: './graphql/schema.graphql'
     endpoint: {
       url: "http://localhost:3000/graphql"

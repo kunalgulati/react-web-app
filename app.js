@@ -65,7 +65,7 @@ const server = new ApolloServer( {
   //   userAPI: new UserAPI({ store })
   // }),
   engine: {
-    apiKey: "service:forkcha:LReYdo78t37nii1vRmQ6eA",
+    apiKey: process.env.API_KEY,
     graphVariant: process.env.NODE_ENV
   }, 
 });
