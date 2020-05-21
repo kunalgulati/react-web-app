@@ -12,10 +12,25 @@ const { ApolloServer } = require('apollo-server-express');
 var bodyParser = require('body-parser');
 var typeDefs = require('./schema.graphql');
 const resolvers = require('./database/resolvers')
-// const LaunchAPI = require('./datasources/launch');
+const LaunchAPI = require('./datasources/launch');
 // const UserAPI = require('./datasources/user');
+// const createStore = require('./utils');
+// const store = createStore();
 
+// the function that sets up the global context for each resolver, using the req
+const context = async ({ req }) => {
+  // simple auth check on every request
+  const auth = (req.headers && req.headers.authorization) || '';
+  const email = new Buffer(auth, 'base64').toString('ascii');
 
+  // if the email isn't formatted validly, return null for user
+  if (!isEmail.validate(email)) return { user: null };
+  // find a user by their email
+  const users = await store.users.findOrCreate({ where: { email } });
+  const user = users && users[0] ? users[0] : null;
+
+  return { user };
+};
 
 
 var index = require('./routes/index');
@@ -60,14 +75,17 @@ app.use('/marketplace', marketplaceRouter);
 const server = new ApolloServer( {
   typeDefs, 
   resolvers,
-  // dataSources: () => ({
-  //   launchAPI: new LaunchAPI(),
-  //   userAPI: new UserAPI({ store })
-  // }),
-  engine: {
-    apiKey: process.env.API_KEY,
+  dataSources: () => ({
+    launchAPI: new LaunchAPI(),
+    // userAPI: new UserAPI({ store })
+  }),
+  introspection: true,
+  playground: true,
+    engine: {
+      apiKey: process.env.API_KEY,
+      graphVariant: process.env.NODE_ENV
+    },
     graphVariant: process.env.NODE_ENV
-  }, 
 });
 server.applyMiddleware({ app, path: '/graphql' });
 
