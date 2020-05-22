@@ -6,7 +6,7 @@ module.exports = {
     // Must match the name of your graph in Graph Manager
     name: 'forkcha-test',
     endpoint:{
-      url: "http://localhost:3000/graphql"
+      url: "http://localhost:4000/graphql"
     }
   }
 };

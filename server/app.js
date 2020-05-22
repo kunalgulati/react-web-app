@@ -12,10 +12,7 @@ const { ApolloServer } = require('apollo-server-express');
 var bodyParser = require('body-parser');
 var typeDefs = require('./schema.graphql');
 const resolvers = require('./database/resolvers')
-const LaunchAPI = require('./datasources/launch');
-// const UserAPI = require('./datasources/user');
-// const createStore = require('./utils');
-// const store = createStore();
+
 
 // the function that sets up the global context for each resolver, using the req
 const context = async ({ req }) => {
@@ -75,10 +72,6 @@ app.use('/marketplace', marketplaceRouter);
 const server = new ApolloServer( {
   typeDefs, 
   resolvers,
-  dataSources: () => ({
-    launchAPI: new LaunchAPI(),
-    // userAPI: new UserAPI({ store })
-  }),
   introspection: true,
   playground: true,
     engine: {
