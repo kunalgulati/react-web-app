@@ -19,11 +19,10 @@ class UserList extends Component {
       <Query query={USER_QUERY}>
       {({ loading, error, data }) => {
         if (loading) return 'Loading...';
-        if (error) return `Error! ${error.message}`;
-  
+        if (error) return `Error! ${error}`;
         return (
-          <div onChange="">
-            {data.map(user => <User key={user.id} user={user} />)}
+          <div >
+            {data.getUsers.map(user => <User key={user.id} user={user} />)}
           </div>
         );
       }}
