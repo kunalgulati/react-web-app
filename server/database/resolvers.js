@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs')
 const Users = require('./dbConnectors').Users;
+const Products = require('./dbConnectors').Products;
 
 // heigher the number, higher will be the time to calculate the hash 
 var saltRounds = 10;
@@ -11,6 +12,9 @@ const resolvers = {
     },
     getUsers: () => {
       return Users.findAll();
+    },
+    getAllProducts: () => {
+      return Products.findAll();
     },
   },
   Mutation: {

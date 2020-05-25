@@ -2,6 +2,7 @@ const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
   scalar Date
+  scalar JSON
 
   type Mutation {
     createUser(input: UserInput): User
@@ -17,6 +18,29 @@ const typeDefs = gql`
     updatedAt: Date
   }
 
+  type Product {
+    id: Int!
+    title: String!
+    description: String!
+    city_of_origin: String!
+    certification: String!
+    province_of_origin: String!
+    country_of_origin:String!
+    grade: JSON!
+    size: String!
+    gmo: Boolean!
+    washed: Boolean!
+    store_temperature_range: String!
+    store_humidity:String!
+    chill_damage_sensitive: Boolean!
+    pack_weight: Float!
+    price: Float!
+    minimum_quantity: Int!
+    available: Date!
+    createdAt: Date
+    updatedAt: Date
+  }
+
   input UserInput {
     id: ID
     name: String!
@@ -27,6 +51,7 @@ const typeDefs = gql`
   type Query {
     hello: String
     getUsers: [User]
+    getAllProducts: [Product]
   }
 
 `;

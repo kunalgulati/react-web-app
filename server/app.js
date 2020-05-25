@@ -2,6 +2,7 @@ var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
+
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -67,7 +68,6 @@ app.use('/users', users);
 app.use('/register', registerRouter);
 app.use('/marketplace', marketplaceRouter);
 
-
 // ****** GRAPHQL START ******* //
 const server = new ApolloServer( {
   typeDefs, 
@@ -80,7 +80,9 @@ const server = new ApolloServer( {
     },
     graphVariant: process.env.NODE_ENV
 });
-server.applyMiddleware({ app, path: '/graphql' });
+server.applyMiddleware({ 
+  app, 
+  path: '/graphql',});
 
 // ****** GRAPHQL END ******* //
 
