@@ -15,6 +15,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Button from '@material-ui/core/Button';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
 
 // import React, { Component } from 'react'
@@ -140,6 +141,14 @@ export default function NavigatinBar() {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
+        <IconButton color="inherit">
+          <Badge badgeContent={4} color="secondary">
+            <ShoppingCartIcon />
+          </Badge>
+        </IconButton>
+        <p>Cart</p>
+      </MenuItem>
+      <MenuItem>
         <IconButton aria-label="show 4 new mails" color="inherit">
           <Badge badgeContent={4} color="secondary">
             <MailIcon />
@@ -205,9 +214,13 @@ export default function NavigatinBar() {
             
               <Route exact path='/register' component={Register}> <Button variant="contained">Register</Button>  </Route>
             </Switch> */}
-            
-            
 
+
+            <IconButton color="inherit">
+              <Badge badgeContent={null} color="secondary">
+                <ShoppingCartIcon />
+              </Badge>
+            </IconButton>
             <IconButton aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <MailIcon />

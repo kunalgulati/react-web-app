@@ -11,6 +11,27 @@ import { ApolloClient } from 'apollo-client'
 import { createHttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 
+// import express from 'express';
+
+// const server = express();
+
+// // server.use(express.static('./build'));
+
+// server.get('/kunal', (req, res) => {
+//   const app = ReactDOMServer.renderToString(<App />);
+
+//   const indexFile = path.resolve('./build/index.html');
+//   fs.readFile(indexFile, 'utf8', (err, data) => {
+//     if (err) {
+//       console.error('Something went wrong:', err);
+//       return res.status(500).send('Oops, better luck next time!');
+//     }
+
+//     return res.send(
+//       data.replace('<div id="root"></div>', `<div id="root">${app}</div>`)
+//     );
+//   });
+// });
 
 // 2
 const httpLink = createHttpLink({

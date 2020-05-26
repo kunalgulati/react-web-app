@@ -7,7 +7,7 @@ class Copyright extends Component {
     return (
       <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
+      <Link color="inherit" href="https://forkcha.com/">
         Forkcha
       </Link>{' '}
       {new Date().getFullYear()}

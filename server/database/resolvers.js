@@ -1,11 +1,13 @@
 const bcrypt = require('bcryptjs')
 const Users = require('./dbConnectors').Users;
 const Products = require('./dbConnectors').Products;
+const GraphQLJSON = require('graphql-type-json');
 
 // heigher the number, higher will be the time to calculate the hash 
 var saltRounds = 10;
 
 const resolvers = {
+  JSON: GraphQLJSON,
   Query: {
     hello: () => {
       return 'Hello wsssorld!'
