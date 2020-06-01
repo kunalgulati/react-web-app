@@ -13,8 +13,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
-import Copyright from '../components/Copyright'
-import NavigationBar from '../components/NavigationBar'
+// import Copyright from '../components/Copyright'
+// import NavigationBar from '../components/NavigationBar'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -44,7 +44,7 @@ export default function SignUp() {
 
   return (
     <Container className={classes.root}>
-      <NavigationBar />
+      {/* <NavigationBar /> */}
       <CssBaseline />
       <Container component="main"  maxWidth="xs">
       <div className={classes.paper} >
@@ -128,7 +128,7 @@ export default function SignUp() {
         </form>
       </div>
       <Box mt={5}>
-        <Copyright />
+        {/* <Copyright /> */}
       </Box>
     </Container>
     </Container>
