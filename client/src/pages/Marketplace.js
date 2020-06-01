@@ -9,8 +9,17 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Copyright from '../components/Copyright'
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import ListItemText from '@material-ui/core/ListItemText';
+import Avatar from '@material-ui/core/Avatar';
+import FolderIcon from '@material-ui/icons/Folder';
+
+// import Footer from '../components/Footer'
 import NavigationBar from '../components/NavigationBar'
+
+
 
 /** GraphQl Query */
 import { Query } from 'react-apollo'
@@ -21,7 +30,7 @@ const GET_ALL_PRODUCT_QUERY = gql`{
   {
     id,
     title,
-      description,
+    description,
     city_of_origin,
     certification,
     province_of_origin,
@@ -72,66 +81,69 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(6),
   },
+  cardList: {
+    backgroundColor: theme.palette.background.paper,
+  },
+  listDetailText: {
+    alignItems: 'center'
+  }
 }));
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 /** Get a List of all avialable Products in the market Place from the Product Table*/
 
+function ProductCardDetailList(props) {
+  const classes = useStyles();
 
-
-
-
+  return (
+    <Grid item xs={12} md={6}>
+      <div className={classes.cardList}>
+        <List>
+          <ListItem>
+            <ListItemAvatar>
+              <Avatar>
+                <FolderIcon />
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText className={{ primary: classes.listDetailText }} primary={
+              <Typography align="center" display="inline">{"Price: $" + props.price}</Typography>
+              } />
+          </ListItem>
+          <ListItem className={classes.listDetailText}>
+            <ListItemAvatar>
+              <Avatar>
+                <FolderIcon />
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText primary={<Typography>{"Min. Quantity: " + props.min_quantity}</Typography>} />
+          </ListItem>
+          <ListItem>
+            <ListItemAvatar>
+              <Avatar>
+                <FolderIcon />
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText primary={<Typography>{"Origin " + props.origin}</Typography>} />
+          </ListItem>
+        </List>
+      </div>
+    </Grid>
+  );
+};
 
 export default function Album() {
   const classes = useStyles();
 
-  <Query query={GET_ALL_PRODUCT_QUERY}>
-      {({ loading, error, data }) => {
-        if (loading) return 'Loading...';
-        if (error) return `Error! ${error}`;
-        cards = data;
-      }}
-  </Query>
 
-  return (
-    <React.Fragment>
-      <CssBaseline />
-      <NavigationBar />
-      <main>
-        {/* Hero unit */}
-        <div className={classes.heroContent}>
-          <Container maxWidth="sm">
-            <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-              Album layout
-            </Typography>
-            <Typography variant="h5" align="center" color="textSecondary" paragraph>
-              Something short and leading about the collection below—its contents, the creator, etc.
-              Make it short and sweet, but not too short so folks don&apos;t simply skip over it
-              entirely.
-            </Typography>
-            <div className={classes.heroButtons}>
-              <Grid container spacing={2} justify="center">
-                <Grid item>
-                  <Button variant="contained" color="primary">
-                    Main call to action
-                  </Button>
-                </Grid>
-                <Grid item>
-                  <Button variant="outlined" color="primary">
-                    Secondary action
-                  </Button>
-                </Grid>
-              </Grid>
-            </div>
-          </Container>
-        </div>
-        
-        <Container className={classes.cardGrid} maxWidth="md">  
-          {/* End hero unit */}
+  const AllProducts = () => (
+    <Query query={GET_ALL_PRODUCT_QUERY}>
+      {({ loading, error, data }) => {
+        if (loading) return "Loading...";
+        if (error) return `Error! ${error.message}`;
+
+        return (
           <Grid container spacing={4}>
-            {/* Map of Cards/Products to add             */}
-            {cards.map((card) => (
+            {data.getAllProducts.map((card) => (
               <Grid item key={card} xs={12} sm={6} md={4}>
                 <Card className={classes.card}>
                   <CardMedia
@@ -141,38 +153,61 @@ export default function Album() {
                   />
                   <CardContent className={classes.cardContent}>
                     <Typography gutterBottom variant="h5" component="h2">
-                      Heading
+                      {card.title}
                     </Typography>
                     <Typography>
-                      This is a media card. You can use this section to describe the content.
+                      {card.description}
                     </Typography>
                   </CardContent>
+                  {/* Price, Min-quantity, Origin */}
+                  <ProductCardDetailList
+                    price={card.price}
+                    min_quantity={`${card.minimum_quantity} KG`}
+                    origin={`${card.city_of_origin}, ${card.province_of_origin}, ${card.country_of_origin}`} />
+
+
+                  {/* Product Card Button */}
                   <CardActions>
                     <Button size="small" color="primary">
-                      View
-                    </Button>
+                      View More
+                  </Button>
                     <Button size="small" color="primary">
-                      Edit
-                    </Button>
+                      Add to Cart
+                  </Button>
                   </CardActions>
                 </Card>
               </Grid>
             ))}
           </Grid>
+        );
+      }}
+    </Query>
+  );
+
+  return (
+    <React.Fragment>
+      <CssBaseline />
+      <NavigationBar />
+      <main>
+        
+        <Container className={classes.cardGrid} maxWidth="md">
+          {/* End hero unit */}
+          {/* <Grid container spacing={4}> */}
+          {/* Map of Cards/Products to add             */}
+          <AllProducts />
+
+
+
+          {/* </Grid> */}
         </Container>
-      
+
       </main>
       {/* Footer */}
-      <footer className={classes.footer}>
-        <Typography variant="h6" align="center" gutterBottom>
-          Footer
-        </Typography>
-        <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
-          Something here to give the footer a purpose!
-        </Typography>
-        <Copyright />
-      </footer>
+      {/* <Footer /> */}
       {/* End footer */}
     </React.Fragment>
   );
 }
+
+
+

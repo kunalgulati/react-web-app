@@ -3,10 +3,6 @@ import Document, { Html, Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheets } from '@material-ui/core/styles';
 import theme from '../theme';
 
-import { ApolloClient } from 'apollo-client';
-import { ApolloProvider } from '@apollo/react-common';
-import { createHttpLink } from 'apollo-link-http';
-import { InMemoryCache } from "apollo-cache-inmemory";
 
 
 
@@ -60,26 +56,12 @@ MyDocument.getInitialProps = async (ctx) => {
   const sheets = new ServerStyleSheets();
   const originalRenderPage = ctx.renderPage;
 
-  const client = new ApolloClient({
-    ssrMode: true,
-    // Remember that this is the interface the SSR server will use to connect to the
-    // API server, so we need to ensure it isn't firewalled, etc
-    link: createHttpLink({
-      uri: 'http://localhost:3010',
-      credentials: 'same-origin',
-    }),
-    cache: new InMemoryCache(),
-  });
 
 
 
   ctx.renderPage = () =>
     originalRenderPage({
-      enhanceApp: (App) => (props) => sheets.collect(
-        <ApolloProvider client={client}>
-          <App {...props} />
-        </ApolloProvider>  
-      
+      enhanceApp: (App) => (props) => sheets.collect(          <App {...props} />
     ),
     });
 
