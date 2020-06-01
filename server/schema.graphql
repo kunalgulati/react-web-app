@@ -23,7 +23,7 @@ const typeDefs = gql`
     title: String!
     description: String!
     city_of_origin: String!
-    certification: JSON!
+    certification: String!
     province_of_origin: String!
     country_of_origin:String!
     grade: JSON!

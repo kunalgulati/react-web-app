@@ -12,10 +12,9 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-
-import Footer from '../components/Footer'
-import NavigationBar from '../components/NavigationBar'
 import Copyright from '../components/Copyright'
+
+import NavigationBar from '../components/NavigationBar'
 
 // GRAPH QL related libraries 
 // import { Query } from 'react-apollo'
@@ -123,7 +122,6 @@ export default function SignInSide() {
           </form>
         </div>
       </Grid>
-      <Footer />
     </Grid>
   );
 }
