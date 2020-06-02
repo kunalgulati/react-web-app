@@ -23,7 +23,16 @@ app.prepare()
     })
 
     server.get('register', (req, res) => {
-      return app.render(req, res, '/Register')
+      return app.render(req, res, '/register')
+    })
+    
+    server.get('orderSummary', (req, res) => {
+      return app.render(req, res, '/orderSummary')
+    })
+
+    // Delete
+    server.get('viewProduct/:card', (req, res) => {
+      return app.render(req, res, '/viewProduct')
     })
 
     

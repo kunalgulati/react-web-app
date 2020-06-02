@@ -5,10 +5,10 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
@@ -16,9 +16,10 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
 import FolderIcon from '@material-ui/icons/Folder';
 
-// import Footer from '../components/Footer'
-import NavigationBar from '../components/NavigationBar'
 
+import Footer from '../components/Footer'
+import NavigationBar from '../components/NavigationBar'
+import {useHistory} from 'react-router-dom'
 
 
 /** GraphQl Query */
@@ -131,16 +132,18 @@ function ProductCardDetailList(props) {
   );
 };
 
+
 export default function Album() {
   const classes = useStyles();
-
+  const history = useHistory()
+  console.log(history);
 
   const AllProducts = () => (
     <Query query={GET_ALL_PRODUCT_QUERY}>
       {({ loading, error, data }) => {
         if (loading) return "Loading...";
         if (error) return `Error! ${error.message}`;
-
+        
         return (
           <Grid container spacing={4}>
             {data.getAllProducts.map((card) => (
@@ -168,10 +171,10 @@ export default function Album() {
 
                   {/* Product Card Button */}
                   <CardActions>
-                    <Button size="small" color="primary">
+                    <Button size="small" color="primary" accessibilityRole="link" href={`/viewProduct/${card}`}>
                       View More
                   </Button>
-                    <Button size="small" color="primary">
+                  <Button size="small" color="primary">
                       Add to Cart
                   </Button>
                   </CardActions>
@@ -183,6 +186,7 @@ export default function Album() {
       }}
     </Query>
   );
+
 
   return (
     <React.Fragment>
@@ -203,7 +207,7 @@ export default function Album() {
 
       </main>
       {/* Footer */}
-      {/* <Footer /> */}
+      <Footer />
       {/* End footer */}
     </React.Fragment>
   );
