@@ -29,11 +29,16 @@ app.prepare()
     server.get('orderSummary', (req, res) => {
       return app.render(req, res, '/orderSummary')
     })
-
-    // Delete
-    server.get('viewProduct/:card', (req, res) => {
+    server.get('orders', (req, res) => {
       return app.render(req, res, '/viewProduct')
     })
+
+    // Delete
+    server.get('viewProduct', (req, res) => {
+      return app.render(req, res, '/viewProduct')
+    })
+
+    
 
     
 
