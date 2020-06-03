@@ -13,40 +13,80 @@ const resolvers = {
     getUsers: () => {
       return Users.findAll();
     },
+    getUser: (parent, args, context, info) => {
+      console.log(args.email)
+      return Users.findOne({
+        where: {
+           email: args.email
+        }
+      }).then(function(user) {
+        if(!user){
+          return null;
+        }
+        console.log(user)
+        return user;
+      });
+      
+ 
+    },
     getAllProducts: () => {
       return Products.findAll();
     },
   },
   Mutation: {
-    createUser: (input) => {
-      const newUser = new Users({
-        id: 001,
-        name: "input.name",
-        email: input.email,
-        password: input.password,
-        createdAt: Date.now(),
-      });
-      // await bcrypt.hash(newUser.password, saltRounds, function(err, hashPassword) {
-      //   if(err) reject(err);
-      //   newUser.password = hashPassword;
-      //   console.log(newUser.password)
-      // });
-
+    createUser: (parent, args, context, info) => {    
+      var newUser = args;
+      
+      // Encrypt the password
       var salt = bcrypt.genSaltSync(saltRounds);
-      var hashPassword = bcrypt.hashSync(newUser.password, salt);
-
+      var hashPassword = bcrypt.hashSync(newUser.password, salt);      
       if(hashPassword){
-        newUser.password = hashPassword;
+        newUser.password = hashPassword;        
       }
-      newUser.id = newUser._id;
+      // Check if the given email already exists; If not, create a new user
+      Users
+        .findOrCreate({where: {email: newUser.email}, defaults: {
+          firstName: newUser.firstName,
+          lastName: newUser.lastName,
+          phoneNumber: newUser.phoneNumber,
+          companyName: newUser.companyName,
+          password: newUser.password,
+          createdAt: Date.now(),
+        }})
+        .spread(function(user, created) {
+          if(created == false){
+            console.log("User already exists");
+            return ("User already exists");
+          } else{
+            return user;
+          }
+        });
+      
+      // // const newUser = new Users({
+      // //   id: 003,
+      // //   firstName: input.firstName,
+      // //   lastName: input.lastName,
+      // //   email: input.email,
+      // //   phoneNumber: input.phoneNumber,
+      // //   companyName: input.companyName,
+      // //   password: input.password,
+      // //   createdAt: Date.now(),
+      // // });
 
-      return new Promise((resolve, object) => {
-        console.log("before")
-        newUser.save((err) => {
-          if (err) reject(err)
-          else resolve(true)
-        })
-      })
+      // // var salt = bcrypt.genSaltSync(saltRounds);
+      // // var hashPassword = bcrypt.hashSync(newUser.password, salt);
+
+      // // if(hashPassword){
+      // //   newUser.password = hashPassword;
+      // // }
+      // // newUser.id = newUser._id;
+
+      // return new Promise((resolve, object) => {
+      //   newUser.save((err) => {
+      //     if (err) reject(err)
+      //     else resolve(newUser)
+      //   })
+      // })
     },
     updateUser: (root, { input }) => {
       return new Promise((resolve, object) => {
@@ -56,6 +96,7 @@ const resolvers = {
         })
       })
     },
+
   }
 };
 

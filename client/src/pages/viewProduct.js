@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function Album() {
+export default function ViewProduct(props) {
   const classes = useStyles();
 
   return (

@@ -11,8 +11,12 @@ const Users = sequelize.define('Users', {
   id: { 
     type: Sequelize.INTEGER,
     primaryKey: true, 
+    autoIncrement: true,
   },
-  name: { type: Sequelize.STRING },
+  firstName: { type: Sequelize.STRING },
+  lastName: { type: Sequelize.STRING },
+  companyName: { type: Sequelize.STRING },
+  phoneNumber: { type: Sequelize.BIGINT },
   email: { type: Sequelize.STRING },
   password: { type: Sequelize.STRING },
   createdAt: { type: Sequelize.DATE },

@@ -19,7 +19,8 @@ import FolderIcon from '@material-ui/icons/Folder';
 
 import Footer from '../components/Footer'
 import NavigationBar from '../components/NavigationBar'
-import {useHistory} from 'react-router-dom'
+import ViewProduct from './viewProduct'
+import { Redirect } from 'react-router';
 
 
 /** GraphQl Query */
@@ -135,9 +136,11 @@ function ProductCardDetailList(props) {
 
 export default function Album() {
   const classes = useStyles();
-  const history = useHistory()
-  console.log(history);
 
+  const viewProductButton = (e) =>{
+    
+
+  };
   const AllProducts = () => (
     <Query query={GET_ALL_PRODUCT_QUERY}>
       {({ loading, error, data }) => {
@@ -171,7 +174,10 @@ export default function Album() {
 
                   {/* Product Card Button */}
                   <CardActions>
-                    <Button size="small" color="primary" accessibilityRole="link" href={`/viewProduct/${card}`}>
+                    <Button 
+                      size="small" 
+                      color="primary" 
+                      >
                       View More
                   </Button>
                   <Button size="small" color="primary">

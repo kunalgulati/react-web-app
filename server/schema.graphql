@@ -5,14 +5,24 @@ const typeDefs = gql`
   scalar JSON
 
   type Mutation {
-    createUser(input: UserInput): User
+    createUser(
+      firstName: String!, 
+      lastName: String!, 
+      email: String!, 
+      phoneNumber: Int!, 
+      companyName: String!, 
+      password: String!
+    ): User
     updateUser(input: UserInput): User
   }
 
   type User {
     id: Int!
-    name: String!
+    firstName: String!
+    lastName: String!
     email: String!
+    phoneNumber: Int!
+    companyName: String!
     password: String!
     createdAt: Date
     updatedAt: Date
@@ -42,15 +52,18 @@ const typeDefs = gql`
   }
 
   input UserInput {
-    id: ID
-    name: String!
-    password: String!
+    firstName: String!
+    lastName: String!
     email: String!
+    phoneNumber: Int!
+    companyName: String!
+    password: String!
   }
 
   type Query {
     hello: String
     getUsers: [User]
+    getUser(email: String): [User]
     getAllProducts: [Product]
   }
 
