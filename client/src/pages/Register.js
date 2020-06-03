@@ -195,7 +195,7 @@ export default function SignUp() {
                       fullWidth
                       name="phoneNumber"
                       label="Phone Number"
-                      type="number"
+                      type="tel"
                       id="phoneNumber"
                       value={phoneNumber}
                       onInput={ event=>setPhoneNumber(event.target.value)}
