@@ -15,12 +15,14 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
 import FolderIcon from '@material-ui/icons/Folder';
+import { Link } from 'react-router-dom'
 
 
 import Footer from '../components/Footer'
 import NavigationBar from '../components/NavigationBar'
 import ViewProduct from './viewProduct'
 import { Redirect } from 'react-router';
+import { useLocation, Route, useParams } from "react-router-dom";
 
 
 /** GraphQl Query */
@@ -133,14 +135,19 @@ function ProductCardDetailList(props) {
   );
 };
 
+function handleClick(event){
+  event.preventDefault();
+  console.log('Click happened');
+}
+
+function handleAddToCart(event){
+  event.preventDefault();
+  console.log("Add to cart");
+}
 
 export default function Album() {
   const classes = useStyles();
 
-  const viewProductButton = (e) =>{
-    
-
-  };
   const AllProducts = () => (
     <Query query={GET_ALL_PRODUCT_QUERY}>
       {({ loading, error, data }) => {
@@ -174,13 +181,21 @@ export default function Album() {
 
                   {/* Product Card Button */}
                   <CardActions>
+                    
                     <Button 
                       size="small" 
                       color="primary" 
+                      // onClick={handleClick}
+                      href={`/viewProduct?${JSON.stringify({id: card.id})}`}
                       >
-                      View More
-                  </Button>
-                  <Button size="small" color="primary">
+                        View Product
+                    </Button>
+
+                  <Button 
+                    size="small" 
+                    color="primary"
+                    onClick={handleAddToCart}
+                    >
                       Add to Cart
                   </Button>
                   </CardActions>

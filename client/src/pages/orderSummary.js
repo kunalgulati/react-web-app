@@ -1,27 +1,41 @@
 import React from 'react'
 import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
-// import Container from '@material-ui/core/Container';
+
 import CssBaseline from '@material-ui/core/CssBaseline';
+import Container from '@material-ui/core/Container';
+import Button from '@material-ui/core/Button';
+import ButtonBase from '@material-ui/core/ButtonBase';
+import Drawer from '@material-ui/core/Drawer';
+import Divider from '@material-ui/core/Divider';
+import Footer from '../components/Footer';
+import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import Button from '@material-ui/core/Button';
-
-import Drawer from '@material-ui/core/Drawer';
-import Divider from '@material-ui/core/Divider';
-
 
 import NavigationBar from '../components/NavigationBar';
-import Footer from '../components/Footer';
+import Paper from '@material-ui/core/Paper';
+
+
+
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+
 
 // Template Based on@ https://dribbble.com/shots/5933374-The-bag/attachments
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
+  spacing: 10,
   root: {
-    display: 'flex',
+    flexGrow: 1,
+    marginTop: 10,
+    width: '100%',
   },
   drawer: {
     width: drawerWidth,
@@ -36,15 +50,24 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing(3),
   },
-  temp: theme.zIndex.drawer + 1,
-  // theme.zIndex.drawer + 1
   orderDrawerTopText: {
     margin: '5%'
   },
   drawerPaymentText: {
     margin: '5%',
     marginTop: '50%'
-  }
+  },
+  appBar: {
+    zIndex: theme.zIndex.drawer + 1,
+  },
+  cardMedia: {
+    paddingTop: '56.25%', // 16:9
+  },
+  cardContent: {
+    flexGrow: 1,
+    paddingTop: "5%",
+
+  },
 }));
 
 export default function OrderSummary() {
@@ -54,11 +77,11 @@ export default function OrderSummary() {
   return (
     <React.Fragment>
       <CssBaseline />
-      <NavigationBar className={classes.temp} />
+      {/* <NavigationBar className={classes.temp} /> */}
+      <NavigationBar position="fixed" className={classes.appBar}>
 
-      <main className={classes.content}>
-        {/* Add Content  */}
-      </main>
+      </NavigationBar>
+
       <Drawer
         className={classes.drawer}
         variant="permanent"
@@ -70,6 +93,7 @@ export default function OrderSummary() {
         <Typography align="center" variant="subtitle1" className={classes.orderDrawerTopText}>Items in your Order</Typography>
 
         <Divider />
+
         {/* Payment Text */}
         <Typography align="center" variant="subtitle2" className={classes.drawerPaymentText}>Payment can be made by any bank card</Typography>
         <Divider />
@@ -77,43 +101,81 @@ export default function OrderSummary() {
         <List>
           <ListItem>
             <ListItemText className={{ primary: classes.listDetailText }} primary=
-            {
-              <Typography align="left" display="inline">
-                {'Subtotal '} 
-                {<Typography align="left" display="inline">{'$234.23'}</Typography> } </Typography> 
-            } 
+              {
+                <Typography align="left" display="inline">
+                  {'Subtotal '}
+                  {<Typography align="left" display="inline">{'$234.23'}</Typography>} </Typography>
+              }
             />
           </ListItem>
           <ListItem>
             <ListItemText className={{ primary: classes.listDetailText }} primary=
-            {
-              <Typography align="left" display="inline">
-                {'Tax '} 
-                {<Typography align="left" display="inline">{'$23.43'}</Typography> } </Typography> 
-            } 
+              {
+                <Typography align="left" display="inline">
+                  {'Tax '}
+                  {<Typography align="left" display="inline">{'$23.43'}</Typography>} </Typography>
+              }
             />
           </ListItem>
           <ListItem>
             <ListItemText className={{ primary: classes.listDetailText }} primary=
-            {
-              <Typography align="left" display="inline">
-                {'Deliver Charges '} 
-                {<Typography align="left" display="inline">{'$100.23'}</Typography> } </Typography> 
-            } 
+              {
+                <Typography align="left" display="inline">
+                  {'Deliver Charges '}
+                  {<Typography align="left" display="inline">{'$100.23'}</Typography>} </Typography>
+              }
             />
           </ListItem>
           <ListItem>
             <ListItemText className={{ primary: classes.listDetailText }} primary=
-            {
-              <Typography align="left" display="inline">
-                {'Total '} 
-                {<Typography align="left" display="inline">{'$357.66'}</Typography> } </Typography> 
-            } 
+              {
+                <Typography align="left" display="inline">
+                  {'Total '}
+                  {<Typography align="left" display="inline">{'$357.66'}</Typography>} </Typography>
+              }
             />
           </ListItem>
         </List>
         <Button variant="contained" color="primary" disableElevation> Continue</Button>
       </Drawer>
+
+      {/* Item Grid */}
+      <Grid container spacing={24} className={classes.root}>
+        <CardContent className={classes.cardContent}>
+          <CardMedia
+            className={classes.cardMedia}
+            image="https://source.unsplash.com/random"
+            title="Image title"
+          />
+        </CardContent>
+        <CardContent className={classes.cardContent} t={2}>
+
+          <Typography variant="h5" component="h3">
+            Peeler Fuji Apples Organic 24" bin
+                </Typography>
+          <Typography component="p">
+            Apples of one variety, unless designated as mixed
+          </Typography>
+          {/* Add an Icon Grid */}
+          <Button variant="contained" color="primary" className={classes.backButton}>
+            Remove
+          </Button>
+          <br></br>
+          <TextField
+          id="standard-number"
+          label="Number of Boxes"
+          type="number"
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />
+
+
+        </CardContent>
+      </Grid>
+
+      <Divider />
+
 
       <Footer />
     </React.Fragment>

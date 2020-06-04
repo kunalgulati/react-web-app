@@ -15,6 +15,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Button from '@material-ui/core/Button';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
 
 // import React, { Component } from 'react'
@@ -85,6 +86,10 @@ const useStyles = makeStyles((theme) => ({
       display: 'none',
     },
   },
+
+  appBar: {
+    zIndex: theme.zIndex.drawer + 1,
+  },
 }));
 
 export default function NavigatinBar() {
@@ -123,12 +128,14 @@ export default function NavigatinBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
+      
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
     </Menu>
   );
 
   const mobileMenuId = 'primary-search-account-menu-mobile';
+  
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
@@ -155,6 +162,14 @@ export default function NavigatinBar() {
         </IconButton>
         <p>Notifications</p>
       </MenuItem>
+      <MenuItem>
+        <IconButton aria-label="show 11 new notifications" color="inherit" href="/orderSummary">
+          <Badge badgeContent={3} color="secondary">
+            <ShoppingCartIcon />
+          </Badge>
+        </IconButton>
+        <p>Shopping Cart</p>
+      </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           aria-label="account of current user"
@@ -171,7 +186,7 @@ export default function NavigatinBar() {
 
   return (
     <div className={classes.grow}>
-      <AppBar position="static">
+      <AppBar position="relative" className={classes.appBar}>
         <Toolbar>
           <IconButton
             edge="start"
@@ -199,14 +214,7 @@ export default function NavigatinBar() {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            {/* <Button variant="contained">Marketplace</Button> */}
-            {/* <Switch>
-              <Route exact path='/marketplace' component={Marketplace}><Button variant="contained">Marketplace</Button> </Route>
-            
-              <Route exact path='/register' component={Register}> <Button variant="contained">Register</Button>  </Route>
-            </Switch> */}
-            
-            
+        
 
             <IconButton aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={4} color="secondary">
@@ -216,6 +224,11 @@ export default function NavigatinBar() {
             <IconButton aria-label="show 17 new notifications" color="inherit">
               <Badge badgeContent={17} color="secondary">
                 <NotificationsIcon />
+              </Badge>
+            </IconButton>
+            <IconButton aria-label="show 4 new mails" color="inherit" href="/orderSummary">
+              <Badge badgeContent={2} color="secondary">
+                <ShoppingCartIcon />
               </Badge>
             </IconButton>
             <IconButton

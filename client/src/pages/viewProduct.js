@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     ...theme.mixins.gutters(),
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
     textAlign: 'left',
     // color: theme.palette.text.secondary,
   },
@@ -43,7 +43,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ViewProduct(props) {
   const classes = useStyles();
-
+  
+  // const t = ;
+  
   return (
     <React.Fragment>
       <CssBaseline />
@@ -52,7 +54,12 @@ export default function ViewProduct(props) {
 
         <Container className={classes.cardGrid} maxWidth="md">
 
-          <Button variant="contained" color="primary" className={classes.backButton}>
+          <Button 
+            variant="contained" 
+            color="primary" 
+            className={classes.backButton}
+            href="/marketplace"
+          >
             <KeyboardArrowLeftIcon />Back to MarketPlace
         </Button>
       
