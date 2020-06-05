@@ -10,7 +10,7 @@ const UserSchema = mongoose.Schema({
     required: true,
     trim: true,
     lowercase: true,
-    index: { unique: true },
+    createIndex: { unique: true },
     validate: {
       validator: emailValidator.validate,
       message: props => `${props.value} is not a valid email address!`,

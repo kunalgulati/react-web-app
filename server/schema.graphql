@@ -15,6 +15,27 @@ const typeDefs = gql`
       password: String!
     ): User
     updateUser(input: UserInput): User
+    createProduct(
+      title: String!
+      description: String!
+      city_of_origin: String!
+      certification: JSON!
+      province_of_origin: String!
+      country_of_origin:String!
+      grade: JSON!
+      size: String!
+      gmo: Boolean!
+      washed: Boolean!
+      store_temperature_range: String!
+      store_humidity:String!
+      chill_damage_sensitive: Boolean!
+      pack_weight: Float!
+      price: Float!
+      minimum_quantity: Int!
+      available: Date!
+      createdAt: Date
+      updatedAt: Date
+    ):Product
   }
 
   type User {
@@ -30,7 +51,7 @@ const typeDefs = gql`
   }
 
   type Product {
-    id: Int!
+    id: ObjectId!
     title: String!
     description: String!
     city_of_origin: String!
