@@ -89,7 +89,8 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
   },
   listDetailText: {
-    alignItems: 'center'
+    alignItems: 'center',
+    paddingTop: theme.spacing(0)
   }
 }));
 
@@ -100,33 +101,23 @@ function ProductCardDetailList(props) {
   const classes = useStyles();
 
   return (
-    <Grid item xs={12} md={6}>
+    // <Grid item xs={12} md={6}>
+    <Grid>
       <div className={classes.cardList}>
         <List>
-          <ListItem>
-            <ListItemAvatar>
-              <Avatar>
-                <FolderIcon />
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText className={{ primary: classes.listDetailText }} primary={
-              <Typography align="center" display="inline">{"Price: $" + props.price}</Typography>
+          <ListItem className={classes.listDetailText }>
+            <ListItemText primary={
+              <Typography 
+                variant="p" 
+                align="left" 
+                style={{display: 'inline-block'}}>
+                {`Price: $${props.price}`}</Typography>
               } />
           </ListItem>
           <ListItem className={classes.listDetailText}>
-            <ListItemAvatar>
-              <Avatar>
-                <FolderIcon />
-              </Avatar>
-            </ListItemAvatar>
             <ListItemText primary={<Typography>{"Min. Quantity: " + props.min_quantity}</Typography>} />
           </ListItem>
           <ListItem>
-            <ListItemAvatar>
-              <Avatar>
-                <FolderIcon />
-              </Avatar>
-            </ListItemAvatar>
             <ListItemText primary={<Typography>{"Origin " + props.origin}</Typography>} />
           </ListItem>
         </List>
@@ -185,6 +176,7 @@ export default function Album() {
                     <Button 
                       size="small" 
                       color="primary" 
+                      variant="contained"
                       // onClick={handleClick}
                       href={`/viewProduct?${JSON.stringify({id: card.id})}`}
                       >
@@ -194,6 +186,7 @@ export default function Album() {
                   <Button 
                     size="small" 
                     color="primary"
+                    variant="contained"
                     onClick={handleAddToCart}
                     >
                       Add to Cart

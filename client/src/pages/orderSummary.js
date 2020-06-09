@@ -11,19 +11,20 @@ import Drawer from '@material-ui/core/Drawer';
 import Divider from '@material-ui/core/Divider';
 import Footer from '../components/Footer';
 import Grid from '@material-ui/core/Grid';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 
 import NavigationBar from '../components/NavigationBar';
+import OrderList from '../views/OrderList';
 import Paper from '@material-ui/core/Paper';
-
 
 
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
+
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 
 
 // Template Based on@ https://dribbble.com/shots/5933374-The-bag/attachments
@@ -32,11 +33,6 @@ const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
   spacing: 10,
-  root: {
-    flexGrow: 1,
-    marginTop: 10,
-    width: '100%',
-  },
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
@@ -59,14 +55,6 @@ const useStyles = makeStyles(theme => ({
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
-  },
-  cardMedia: {
-    paddingTop: '56.25%', // 16:9
-  },
-  cardContent: {
-    flexGrow: 1,
-    paddingTop: "5%",
-
   },
 }));
 
@@ -140,39 +128,7 @@ export default function OrderSummary() {
       </Drawer>
 
       {/* Item Grid */}
-      <Grid container spacing={24} className={classes.root}>
-        <CardContent className={classes.cardContent}>
-          <CardMedia
-            className={classes.cardMedia}
-            image="https://source.unsplash.com/random"
-            title="Image title"
-          />
-        </CardContent>
-        <CardContent className={classes.cardContent} t={2}>
-
-          <Typography variant="h5" component="h3">
-            Peeler Fuji Apples Organic 24" bin
-                </Typography>
-          <Typography component="p">
-            Apples of one variety, unless designated as mixed
-          </Typography>
-          {/* Add an Icon Grid */}
-          <Button variant="contained" color="primary" className={classes.backButton}>
-            Remove
-          </Button>
-          <br></br>
-          <TextField
-          id="standard-number"
-          label="Number of Boxes"
-          type="number"
-          InputLabelProps={{
-            shrink: true,
-          }}
-        />
-
-
-        </CardContent>
-      </Grid>
+      <OrderList />
 
       <Divider />
 
