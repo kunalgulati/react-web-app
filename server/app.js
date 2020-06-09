@@ -50,15 +50,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 
 app.use(cookieParser());
-// app.use(session({
-//   secret: 'kunal123',
-//   resave: true,
-//   saveUninitialized: false,
-//   store: new 
-
-// }));
-
-
 
 
 app.use(express.static(path.join(__dirname, 'public')));

@@ -1,14 +1,14 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Product = sequelize.define('Product', {
-    title: DataTypes.STRING,
-    description: DataTypes.STRING,
-    certification: DataTypes.JSON,
-    city_of_origin: DataTypes.STRING,
-    province_of_origin: DataTypes.STRING,
-    country_of_origin: DataTypes.STRING,
-    grade: DataTypes.JSON,
-    size: DataTypes.STRING,
+    // title: DataTypes.STRING,
+    // description: DataTypes.STRING,
+    // certification: DataTypes.JSON,
+    // city_of_origin: DataTypes.STRING,
+    // province_of_origin: DataTypes.STRING,
+    // country_of_origin: DataTypes.STRING,
+    // grade: DataTypes.JSON,
+    // size: DataTypes.STRING,
     gmo: DataTypes.BOOLEAN,
     washed: DataTypes.BOOLEAN,
     store_temperature_range: DataTypes.STRING,

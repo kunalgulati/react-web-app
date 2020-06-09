@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs')
-const Users = require('./dbConnectors').Users;
-const Products = require('./dbConnectors').Products;
+const Users = require('../models/UserModel').Users;
+const Products = require('../models/ProductModel').Products;
 
 // heigher the number, higher will be the time to calculate the hash 
 var saltRounds = 10;
@@ -11,84 +11,70 @@ const resolvers = {
       return 'Hello wsssorld!'
     },
     getUsers: () => {
-      return Users.findAll();
+      return Users.find();
     },
     getUser: (parent, args, context, info) => {
-      console.log(args.email)
-      return Users.findOne({
-        where: {
-           email: args.email
-        }
-      }).then(function(user) {
-        if(!user){
-          return null;
-        }
-        console.log(user)
-        return user;
-      });
-      
- 
+      var user = Users.find({ email: args.email});
+      if(!user) { return null;}
+      else {return user}
     },
     getAllProducts: () => {
-      return Products.findAll();
+      return Products.find();
     },
   },
   Mutation: {
     createUser: (parent, args, context, info) => {    
-      var newUser = args;
-      
-      // Encrypt the password
-      var salt = bcrypt.genSaltSync(saltRounds);
-      var hashPassword = bcrypt.hashSync(newUser.password, salt);      
-      if(hashPassword){
-        newUser.password = hashPassword;        
-      }
-      // Check if the given email already exists; If not, create a new user
-      Users
-        .findOrCreate({where: {email: newUser.email}, defaults: {
-          firstName: newUser.firstName,
-          lastName: newUser.lastName,
-          phoneNumber: newUser.phoneNumber,
-          companyName: newUser.companyName,
-          password: newUser.password,
-          createdAt: Date.now(),
-        }})
-        .spread(function(user, created) {
-          if(created == false){
-            console.log("User already exists");
-            return ("User already exists");
-          } else{
-            return user;
-          }
-        });
-      
-      // // const newUser = new Users({
-      // //   id: 003,
-      // //   firstName: input.firstName,
-      // //   lastName: input.lastName,
-      // //   email: input.email,
-      // //   phoneNumber: input.phoneNumber,
-      // //   companyName: input.companyName,
-      // //   password: input.password,
-      // //   createdAt: Date.now(),
-      // // });
+      const newUser = new Users({
+        email: args.email,
+        password: args.password,
+        firstName: args.firstName,
+        lastName: args.lastName,
+        companyName: args.companyName, 
+        phoneNumber: args.phoneNumber
+      });
 
-      // // var salt = bcrypt.genSaltSync(saltRounds);
-      // // var hashPassword = bcrypt.hashSync(newUser.password, salt);
+      newUser.id = newUser._id;
 
-      // // if(hashPassword){
-      // //   newUser.password = hashPassword;
-      // // }
-      // // newUser.id = newUser._id;
+      return new Promise((resolve, reject)=>{
+        newUser.save((err) => {
+          if (err) reject(err)
+          else resolve(newUser)
+        })
+      })
+    },
+    createProduct: (parent, args, context, info) => {    
+      const newProduct = new Products({
+        title: args.title,
+        description: args.description,
+        certification: args.certification,
+        city_of_origin: args.city_of_origin,
+        province_of_origin: args.province_of_origin,
+        country_of_origin: args.country_of_origin,
+        grade: args.grade,
+        size: args.size,
+        gmo: args.gmo,
+        washed: args.washed,
+        store_temperature_range: args.store_temperature_range,
+        store_humidity: args.store_humidity,
+        chill_damage_sensitive: args.chill_damage_sensitive,
+        pack_weight: args.pack_weight,
+        price: args.price,
+        minimum_quantity: args.minimum_quantity,
+        available: args.available
+      });
 
-      // return new Promise((resolve, object) => {
-      //   newUser.save((err) => {
-      //     if (err) reject(err)
-      //     else resolve(newUser)
-      //   })
-      // })
+      newProduct.id = newProduct._id;
+
+      return new Promise((resolve, reject)=>{
+        newProduct.save((err) => {
+          if (err) reject(err)
+          else resolve(newProduct)
+        })
+      })
     },
     updateUser: (root, { input }) => {
+      //WRONG
+      //TODO
       return new Promise((resolve, object) => {
         Users.findOneAndUpdate({ _id: input.id }, input, { new: true }, (err, friend) => {
           if (err) reject(err)
