@@ -12,12 +12,16 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { withRouter } from 'react-router-dom';
+
 
 import NavigationBar from '../components/NavigationBar';
 
 /** GraphQl Query */
 import { Mutation } from '@apollo/react-components';
 import gql from 'graphql-tag';
+
+import { Redirect } from 'react-router-dom';
 
 const CREATE_USER = gql`
   mutation Create(
@@ -98,9 +102,10 @@ export default function SignUp() {
         </Typography>
 
 
+
           <Mutation mutation={CREATE_USER}>
-            {(Create, { data }) => (
-              // <form className={classes.form} noValidate >
+            { (Create, { loading, error }) => (
+              <div>
               <form
                 className={classes.form}
                 noValidate
@@ -116,11 +121,16 @@ export default function SignUp() {
                         email: email,
                         companyName: companyName
                       }
-                    })
-                  // input.value = '';
+                    });
+                    if(error){
+                      console.log("erooorr")
+                      // console.log(error)
+                    } else{
+                      console.log("Successfully regisered");
+                      // return <Redirect to='/login' />;
+                    }
                 }}
               >
-
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={6}>
                     <TextField
@@ -237,8 +247,16 @@ export default function SignUp() {
               </Link>
                   </Grid>
                 </Grid>
+
               </form>
+
+              {loading && <p>Loading...</p>}
+              {error && <p>Error :( Please try again </p>}
+              </div>
+              
+              
             )}
+            
           </Mutation>
         </div>
         <Box mt={5}>

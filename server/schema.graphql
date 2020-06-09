@@ -4,6 +4,7 @@ const typeDefs = gql`
   scalar Date
   scalar JSON
   scalar ObjectId
+  scalar Decimal128
 
   type Mutation {
     createUser(
@@ -65,8 +66,8 @@ const typeDefs = gql`
     store_temperature_range: String!
     store_humidity:String!
     chill_damage_sensitive: Boolean!
-    pack_weight: Float!
-    price: Float!
+    pack_weight: Decimal128!
+    price: Decimal128!
     minimum_quantity: Int!
     available: Date!
     createdAt: Date
