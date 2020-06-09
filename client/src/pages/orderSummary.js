@@ -65,11 +65,8 @@ export default function OrderSummary() {
   return (
     <React.Fragment>
       <CssBaseline />
-      {/* <NavigationBar className={classes.temp} /> */}
       <NavigationBar position="fixed" className={classes.appBar}>
-
       </NavigationBar>
-
       <Drawer
         className={classes.drawer}
         variant="permanent"
@@ -127,13 +124,10 @@ export default function OrderSummary() {
         <Button variant="contained" color="primary" disableElevation> Continue</Button>
       </Drawer>
 
-      {/* Item Grid */}
       <OrderList />
+      <Divider/>
 
-      <Divider />
-
-
-      <Footer />
+      {/* <Footer /> */}
     </React.Fragment>
 
   );

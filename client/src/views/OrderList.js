@@ -7,10 +7,13 @@ import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
+import { Box, Avatar, Container, Divider } from '@material-ui/core';
+
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 
 // Template Based on@ https://dribbble.com/shots/5933374-The-bag/attachments
 
@@ -27,10 +30,14 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
     paddingTop: "5%",
   },
-  ListRoot: {
+  listRoot: {
     width: '100%',
     maxWidth: '36ch',
+    marginLeft: "5%",
     backgroundColor: theme.palette.background.paper,
+  },
+  listGrid: {
+    margin: "2%",
   },
   listItemButton: {
     spacing: theme.spacing(4),
@@ -40,118 +47,141 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+
+
+function ListView() {
+  const classes = useStyles();
+  return (
+    <React.Fragment>
+        <Divider />
+        <Grid
+          container
+          spacing={0}
+          direction="column"
+          class={classes.listGrid}
+        >
+          <List
+            className={classes.listRoot}>
+  
+            <ListItem >
+              <ListItemAvatar>
+                <Avatar
+                  alt={`Avatar`}
+                  src="https://source.unsplash.com/random"
+                  title="Image title"
+                />
+              </ListItemAvatar>
+              <ListItemText
+                primary={<Typography variant="subtitle2" > Peeler Fuji Apples Organic 24" bin</Typography>}
+                secondary={
+                  <React.Fragment>
+                    <Typography
+                      component="span"
+                      variant="caption"
+                      className={classes.inline}
+                      color="textPrimary"
+                    >
+                      Apples of one variety, unless designated as mixed
+                    </Typography>
+                  </React.Fragment>
+                }
+              />
+            </ListItem>
+            <ListItem alignItems="right" className={classes.listItemButton}>
+              <Box>
+                <TextField
+                  id="standard-number"
+                  label="Number of Boxes"
+                  type="number"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </Box>
+              <Box pl={4}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className={classes.backButton}>
+                  Remove
+                </Button>
+              </Box>
+            </ListItem>
+          </List>
+        </Grid>
+        {/* // Secon */}
+        <Divider />
+        <Grid
+          container
+          spacing={0}
+          direction="column"
+          class={classes.listGrid}
+        >
+          <List
+            className={classes.listRoot}>
+  
+            <ListItem >
+              <ListItemAvatar>
+                <Avatar
+                  alt={`Avatar`}
+                  src="https://source.unsplash.com/random"
+                  title="Image title"
+                />
+              </ListItemAvatar>
+              <ListItemText
+                primary={<Typography variant="subtitle2" > Peeler Fuji Apples Organic 24" bin</Typography>}
+                secondary={
+                  <React.Fragment>
+                    <Typography
+                      component="span"
+                      variant="caption"
+                      className={classes.inline}
+                      color="textPrimary"
+                    >
+                      Apples of one variety, unless designated as mixed
+                    </Typography>
+                  </React.Fragment>
+                }
+              />
+            </ListItem>
+            <ListItem alignItems="right" className={classes.listItemButton}>
+              <Box>
+                <TextField
+                  id="standard-number"
+                  label="Number of Boxes"
+                  type="number"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </Box>
+              <Box pl={4}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className={classes.backButton}>
+                  Remove
+                </Button>
+              </Box>
+            </ListItem>
+          </List>
+        </Grid>
+        
+    </React.Fragment>
+  );
+}
+
+
 export default function OrderList() {
   const classes = useStyles();
 
-
   return (
     <React.Fragment>
-      <Grid container spacing={24} className={classes.root}>
-      <List >
-      <ListItem>
-        <CardContent className={classes.cardContent} >
-          <CardMedia
-            className={classes.cardMedia}
-            image="https://source.unsplash.com/random"
-            title="Image title"
-          />
-        </CardContent>
-        <CardContent className={classes.cardContent} t={2}>
-
-          <List className={classes.ListRoot}>
-            <ListItem alignItems="flex-start">
-              <ListItemText
-                primary={<Typography variant="h9" component="h3"> Peeler Fuji Apples Organic 24" bin</Typography>}
-                secondary={
-                  <React.Fragment>
-                    <Typography
-                      component="span"
-                      variant="body2"
-                      className={classes.inline}
-                      color="textPrimary"
-                    >
-                      Apples of one variety, unless designated as mixed
-                    </Typography>
-                  </React.Fragment>
-                }
-              />
-            </ListItem>
-
-            <ListItem alignItems="center" className={classes.listItemButton}>
-              <TextField
-                id="standard-number"
-                label="Number of Boxes"
-                type="number"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
-              <Button
-                variant="contained"
-                color="primary"
-                className={classes.backButton}>
-                Remove
-            </Button>
-
-            </ListItem>
-          </List>
-        </CardContent>
-        </ListItem>
-
-
-        <ListItem>
-        <CardContent className={classes.cardContent} >
-          <CardMedia
-            className={classes.cardMedia}
-            image="https://source.unsplash.com/random"
-            title="Image title"
-          />
-        </CardContent>
-        <CardContent className={classes.cardContent} t={2}>
-
-          <List className={classes.ListRoot}>
-            <ListItem alignItems="flex-start">
-              <ListItemText
-                primary={<Typography variant="h9" component="h3"> Peeler Fuji Apples Organic 24" bin</Typography>}
-                secondary={
-                  <React.Fragment>
-                    <Typography
-                      component="span"
-                      variant="body2"
-                      className={classes.inline}
-                      color="textPrimary"
-                    >
-                      Apples of one variety, unless designated as mixed
-                    </Typography>
-                  </React.Fragment>
-                }
-              />
-            </ListItem>
-
-            <ListItem alignItems="center" className={classes.listItemButton}>
-              <TextField
-                id="standard-number"
-                label="Number of Boxes"
-                type="number"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
-              <Button
-                variant="contained"
-                color="primary"
-                className={classes.backButton}>
-                Remove
-            </Button>
-
-            </ListItem>
-          </List>
-        </CardContent>
-        </ListItem>
-        </List>
-        
+      {/* <Grid container spacing={24} className={classes.root}> */}
+      <Grid spacing={1} className={classes.root}>
+        <ListView />
       </Grid>
-      
+
     </React.Fragment>
 
   );

@@ -215,7 +215,7 @@ export default function NavigatinBar() {
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
         
-
+            <Button href="marketplace"> Marketplace</Button>
             <IconButton aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <MailIcon />
