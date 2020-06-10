@@ -1,6 +1,9 @@
 const bcrypt = require('bcryptjs')
 const Users = require('../models/UserModel').Users;
 const Products = require('../models/ProductModel').Products;
+const OrderCartItems = require('../models/OrderCartModel').OrderCartItems;
+const mongoose = require('mongoose')
+
 
 // heigher the number, higher will be the time to calculate the hash 
 var saltRounds = 10;
@@ -14,35 +17,55 @@ const resolvers = {
       return Users.find();
     },
     getUser: (parent, args, context, info) => {
-      var user = Users.find({ email: args.email});
-      if(!user) { return null;}
-      else {return user}
+      var user = Users.find({ email: args.email });
+      if (!user) { return null; }
+      else { return user }
     },
     getAllProducts: () => {
       return Products.find();
     },
+    // Cart
+    getOrderCartItems: (parent, args, context, info) => {
+      var orderCartItem = OrderCartItems.find({ user_id: mongoose.Types.ObjectId(args.userId) });
+      if (!orderCartItem) { return null; }
+      else { return orderCartItem }
+      // return OrderCartItems.find()
+    },
   },
   Mutation: {
-    createUser: (parent, args, context, info) => {    
+    /** **************************************** User **************************************** */
+    createUser: (parent, args, context, info) => {
       const newUser = new Users({
         email: args.email,
         password: args.password,
         firstName: args.firstName,
         lastName: args.lastName,
-        companyName: args.companyName, 
+        companyName: args.companyName,
         phoneNumber: args.phoneNumber
       });
 
       newUser.id = newUser._id;
 
-      return new Promise((resolve, reject)=>{
+      return new Promise((resolve, reject) => {
         newUser.save((err) => {
           if (err) reject(err)
           else resolve(newUser)
         })
       })
     },
-    createProduct: (parent, args, context, info) => {    
+    updateUser: (root, { input }) => {
+      //WRONG
+      //TODO
+      return new Promise((resolve, object) => {
+        Users.findOneAndUpdate({ _id: input.id }, input, { new: true }, 
+          (err, friend) => {
+          if (err) reject(err)
+          else resolve(friend)
+        })
+      })
+    },
+    /** ************************************** Product **************************************** */
+    createProduct: (parent, args, context, info) => {
       const newProduct = new Products({
         title: args.title,
         description: args.description,
@@ -65,24 +88,54 @@ const resolvers = {
 
       newProduct.id = newProduct._id;
 
-      return new Promise((resolve, reject)=>{
+      return new Promise((resolve, reject) => {
         newProduct.save((err) => {
           if (err) reject(err)
           else resolve(newProduct)
         })
       })
-    },
-    updateUser: (root, { input }) => {
-      //WRONG
-      //TODO
-      return new Promise((resolve, object) => {
-        Users.findOneAndUpdate({ _id: input.id }, input, { new: true }, (err, friend) => {
-          if (err) reject(err)
-          else resolve(friend)
-        })
+    },    
+    /** ************************************* Order Cart **************************************** */
+    addProductCart: (parent, args, context, info) => {
+      const filter = {
+        $and: [
+          { user_id: mongoose.Types.ObjectId(args.userId) },
+          { product_id: mongoose.Types.ObjectId(args.productId) }
+        ]
+      };
+
+      var result = {};
+      return new Promise((resolve, reject) => {
+        OrderCartItems.find(filter, function (err, data) {
+          if (err) { return err }
+          else if (data.length == 1) {
+            /** If data.length == 1 means the product already exisits in the Cart;
+             * So we need to update it's quantity */ 
+            result = data[0];
+            var newQuantity = result.quantity + args.quantity;
+            OrderCartItems.updateOne(filter, { quantity: newQuantity },
+                (err) => {
+                  console.log(err)
+                  if (err) reject(err)
+                  else resolve(true)
+            })
+          } else {
+            /** The product doesn't already exisits in the cart;
+             * So we need to update it's quantity */ 
+            const cartItem = new OrderCartItems({
+              user_id: args.userId,
+              product_id: args.productId,
+              quantity: args.quantity,
+            });
+            cartItem.id = cartItem._id;
+            cartItem.save((err) => {
+              if (err) reject(err)
+              else resolve(true)
+            })
+          }
+        });
       })
     },
-
   }
 };
 

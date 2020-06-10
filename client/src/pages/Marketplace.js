@@ -26,8 +26,10 @@ import { useLocation, Route, useParams } from "react-router-dom";
 
 
 /** GraphQl Query */
-import { Query } from 'react-apollo'
+import { Query, Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
+
+/** ************************************  Query  ************************************ */
 
 const GET_ALL_PRODUCT_QUERY = gql`{
   getAllProducts
@@ -54,6 +56,22 @@ const GET_ALL_PRODUCT_QUERY = gql`{
     updatedAt
   }
 }`
+
+/** ************************************  Mutation  ************************************ */
+const ADD_ITEM_TO_CART = gql`
+  mutation Create(
+    $userId: ObjectId!
+    $productId: ObjectId!
+    $quantity: Int!
+  ) {
+  addProductCart(
+    userId: $userId
+    productId: $productId
+    quantity: $quantity
+  ) 
+}`
+
+var productIdArray = [];
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -111,7 +129,7 @@ function ProductCardDetailList(props) {
                 variant="p" 
                 align="left" 
                 style={{display: 'inline-block'}}>
-                {`Price: $${props.price}`}</Typography>
+                {`Price: $${ props.price }`}</Typography>
               } />
           </ListItem>
           <ListItem className={classes.listDetailText}>
@@ -133,23 +151,22 @@ function handleClick(event){
 
 function handleAddToCart(event){
   event.preventDefault();
-  console.log("Add to cart");
+  
 }
 
 export default function Album() {
   const classes = useStyles();
-
   const AllProducts = () => (
     <Query query={GET_ALL_PRODUCT_QUERY}>
       {({ loading, error, data }) => {
         if (loading) return "Loading...";
-        if (error) return `Error! ${error.message}`;
+        if (error) return `Error! ${ error.message } `;
         
         return (
           <Grid container spacing={4}>
             {data.getAllProducts.map((card) => (
               <Grid item key={card} xs={12} sm={6} md={4}>
-                <Card className={classes.card}>
+                <Card className={classes.card} id={"Mutation"}>
                   <CardMedia
                     className={classes.cardMedia}
                     image="https://source.unsplash.com/random"
@@ -166,8 +183,8 @@ export default function Album() {
                   {/* Price, Min-quantity, Origin */}
                   <ProductCardDetailList
                     price={card.price}
-                    min_quantity={`${card.minimum_quantity} KG`}
-                    origin={`${card.city_of_origin}, ${card.province_of_origin}, ${card.country_of_origin}`} />
+                    min_quantity={`${ card.minimum_quantity } KG`}
+                    origin={`${ card.city_of_origin }, ${ card.province_of_origin }, ${ card.country_of_origin } `} />
 
 
                   {/* Product Card Button */}
@@ -178,19 +195,41 @@ export default function Album() {
                       color="primary" 
                       variant="contained"
                       // onClick={handleClick}
-                      href={`/viewProduct?${JSON.stringify({id: card.id})}`}
+                      href={`/ viewProduct ? ${ JSON.stringify({ id: card.id }) } `}
                       >
                         View Product
                     </Button>
 
-                  <Button 
+                    <Mutation mutation={ADD_ITEM_TO_CART}>
+                      { (Create, { loading, error }) => (
+                    <Button 
                     size="small" 
                     color="primary"
                     variant="contained"
-                    onClick={handleAddToCart}
+                    // onClick={handleAddToCart(Create, loading, error )}
+                    onClick={event => {
+                      event.preventDefault();
+                      Create(
+                        {
+                          variables: {
+                            userId: "5edab39c6c09ee1e30cae601",
+                            productId: "5edab9f6bc81e02209015140",
+                            quantity: 1
+                          }
+                        });
+                        if(error){
+                          console.log("erooorr")
+                          // console.log(error)
+                        } else{
+                          console.log("Successfully regisered");
+                          // return <Redirect to='/login' />;
+                        }
+                    }}
                     >
                       Add to Cart
                   </Button>
+                      )}
+                    </Mutation>
                   </CardActions>
                 </Card>
               </Grid>

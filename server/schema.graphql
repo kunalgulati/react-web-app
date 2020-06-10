@@ -37,6 +37,11 @@ const typeDefs = gql`
       createdAt: Date
       updatedAt: Date
     ):Product
+    addProductCart(
+      userId: ObjectId!
+      productId: ObjectId!
+      quantity: Int!
+    ):Boolean
   }
 
   type User {
@@ -73,6 +78,15 @@ const typeDefs = gql`
     createdAt: Date
     updatedAt: Date
   }
+  
+  type OrderCartItem {
+    id: ObjectId!
+    user_id: ObjectId!
+    product_id: ObjectId!
+    quantity: Int!
+    createdAt: Date
+    updatedAt: Date
+  }
 
   input UserInput {
     firstName: String!
@@ -88,6 +102,7 @@ const typeDefs = gql`
     getUsers: [User]
     getUser(email: String): [User]
     getAllProducts: [Product]
+    getOrderCartItems(userId: ObjectId): [OrderCartItem]
   }
 
 `;
