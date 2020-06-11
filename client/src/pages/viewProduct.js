@@ -10,95 +10,75 @@ import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
-import { Link } from '@material-ui/core';
-
-
-
+import { withRouter } from 'next/router';
 
 import Footer from '../components/Footer'
 import NavigationBar from '../components/NavigationBar'
+import ViewProductContent from '../views/ViewProductContent'
+
+/** GraphQl Query */
+import gql from 'graphql-tag'
+import { useQuery } from "@apollo/react-hooks";
+
+
+const GET_PRODUCT_DETAIL_QUERY = gql`
+  query get($productId: ObjectId!) {
+    getProduct(productId: $productId) {
+      id,
+      title,
+      description,
+      city_of_origin,
+      certification,
+      province_of_origin,
+      country_of_origin,
+      grade,
+      size,
+      gmo,
+      washed,
+      store_temperature_range,
+      store_humidity,
+      chill_damage_sensitive,
+      pack_weight,
+      price,
+      minimum_quantity,
+      available,
+    }
+  }
+`;
+
+const getProductDescription = (id) => {
+  const { data, loading, error } = useQuery(GET_PRODUCT_DETAIL_QUERY, {
+    variables: {
+      productId: id
+    }}    
+  );
+
+  // if (loading) return console.log("Loading");
+  if (error) return <p>ERROR</p>;
+  if (!data) return <p>Not found</p>;
+  console.log(data);
+  return  data.getProduct[0];
+};
 
 const useStyles = makeStyles((theme) => ({
-  backButton: {
-    marginTop: theme.spacing(5),
-  },
-  cardContent: {
-    flexGrow: 1,
-  },
-  root: {
-    flexGrow: 1,
-    marginTop: theme.spacing(5)
-  },
-  paper: {
-    ...theme.mixins.gutters(),
-    padding: theme.spacing(2),
-    textAlign: 'left',
-    // color: theme.palette.text.secondary,
-  },
-  cardMedia: {
-    paddingTop: '56.25%', // 16:9
-  },
+
 }));
 
 
-export default function ViewProduct(props) {
+export default withRouter(function ViewProduct(props) {
   const classes = useStyles();
-  
-  // const t = ;
-  
+  // var productDescription = {};
+
+  // productDescription = getProductDescription(props.router.query.productId)
+  // console.log("product id : " +props.router.query.productId)
+
   return (
     <React.Fragment>
       <CssBaseline />
-      <NavigationBar />
-      <main>
-
-        <Container className={classes.cardGrid} maxWidth="md">
-
-          <Button 
-            variant="contained" 
-            color="primary" 
-            className={classes.backButton}
-            href="/marketplace"
-          >
-            <KeyboardArrowLeftIcon />Back to MarketPlace
-        </Button>
-      
-        <Typography align="left">{"Specifications"}</Typography>
-
-
-          <Grid container spacing={24} className={classes.root}>
-            <CardContent className={classes.cardContent}>
-              <CardMedia
-                className={classes.cardMedia}
-                image="https://source.unsplash.com/random"
-                title="Image title"
-              />
-            </CardContent>
-            <CardContent className={classes.cardContent}>
-              <Paper className={classes.paper}>
-                <Typography variant="h5" component="h3">
-                  This is a sheet of paper.
-                </Typography>
-                <Typography component="p">
-                  Paper can be used to build surface or other elements for your application.
-                </Typography>
-                {/* Add an Icon Grid */}
-                <Button variant="contained" color="primary" className={classes.backButton}>
-                  Add to Cart
-                </Button>
-              </Paper>
-            </CardContent>
-          </Grid>
-
-          <Divider />
-
-        </Container>
-
-      </main>
-      {/* Footer */}
+      <NavigationBar userId={"5edab39c6c09ee1e30cae600"}/>
+      <ViewProductContent productId={props.router.query.productId} />
       <Footer />
-      {/* End footer */}
     </React.Fragment>
-  );
-}
+);
+})
 

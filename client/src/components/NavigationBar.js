@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -17,9 +17,37 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import Button from '@material-ui/core/Button';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
+/** GraphQl Query */
+import gql from 'graphql-tag'
+import { useQuery } from "@apollo/react-hooks";
 
-// import React, { Component } from 'react'
-// import Link from '@material-ui/core/Link';
+const GET_CART_ITEM_QUANTITY = gql`
+  query itemQuantityList($userId: ObjectId) {
+    getOrderCartItems(userId: $userId) {
+      quantity,
+    }
+  }
+`;
+
+const CartItemCount = (id) => {
+  const { data, loading, error } = useQuery(GET_CART_ITEM_QUANTITY, 
+    {
+    variables: {
+      userId: id
+    }
+  }   
+  );
+
+  // if (loading) return console.log("Loading");
+  if (error) return <p>ERROR</p>;
+  if (!data) return <p>Not found</p>;
+  var count = 0;
+  for(var i=0; i<data.getOrderCartItems.length; i++){
+    count += data.getOrderCartItems[i].quantity;
+  };
+
+  return  count;
+};
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -92,7 +120,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function NavigatinBar() {
+
+export default function NavigatinBar(props) {
+  // const [shoppingCartCount, setshoppingCartCount] = useState(0);
+  var shoppingCartCount = 0;
+  shoppingCartCount = CartItemCount(props.userId);
+
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -164,7 +197,7 @@ export default function NavigatinBar() {
       </MenuItem>
       <MenuItem>
         <IconButton aria-label="show 11 new notifications" color="inherit" href="/orderSummary">
-          <Badge badgeContent={3} color="secondary">
+          <Badge badgeContent={shoppingCartCount} color="secondary">
             <ShoppingCartIcon />
           </Badge>
         </IconButton>
@@ -227,7 +260,9 @@ export default function NavigatinBar() {
               </Badge>
             </IconButton>
             <IconButton aria-label="show 4 new mails" color="inherit" href="/orderSummary">
-              <Badge badgeContent={2} color="secondary">
+              
+              {/* CART */}
+              <Badge badgeContent={shoppingCartCount} color="secondary">
                 <ShoppingCartIcon />
               </Badge>
             </IconButton>

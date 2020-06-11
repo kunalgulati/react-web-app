@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState }  from 'react';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -23,11 +23,15 @@ import NavigationBar from '../components/NavigationBar'
 import ViewProduct from './viewProduct'
 import { Redirect } from 'react-router';
 import { useLocation, Route, useParams } from "react-router-dom";
+import Router from 'next/router';
 
 
 /** GraphQl Query */
 import { Query, Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
+
+import { useHistory } from 'react-router-dom';
+
 
 /** ************************************  Query  ************************************ */
 
@@ -126,7 +130,7 @@ function ProductCardDetailList(props) {
           <ListItem className={classes.listDetailText }>
             <ListItemText primary={
               <Typography 
-                variant="p" 
+                variant="subtitle1" 
                 align="left" 
                 style={{display: 'inline-block'}}>
                 {`Price: $${ props.price }`}</Typography>
@@ -144,9 +148,14 @@ function ProductCardDetailList(props) {
   );
 };
 
-function handleClick(event){
-  event.preventDefault();
-  console.log('Click happened');
+/** Source: https://stackoverflow.com/questions/51369784/next-js-redirect-inside-of-graphql-mutation */
+function handleViewProduct(card, i){
+  console.log(card)
+  Router.push({ 
+    pathname: '/viewProduct',
+    query: { productId: "5edab9b6bc81e02209015140",
+    temp: "yes" }
+  })
 }
 
 function handleAddToCart(event){
@@ -154,8 +163,11 @@ function handleAddToCart(event){
   
 }
 
+var t = [];
 export default function Album() {
   const classes = useStyles();
+  var iteration = 0;
+  
   const AllProducts = () => (
     <Query query={GET_ALL_PRODUCT_QUERY}>
       {({ loading, error, data }) => {
@@ -164,7 +176,7 @@ export default function Album() {
         
         return (
           <Grid container spacing={4}>
-            {data.getAllProducts.map((card) => (
+            {data.getAllProducts.map((card, i) => (
               <Grid item key={card} xs={12} sm={6} md={4}>
                 <Card className={classes.card} id={"Mutation"}>
                   <CardMedia
@@ -180,22 +192,20 @@ export default function Album() {
                       {card.description}
                     </Typography>
                   </CardContent>
-                  {/* Price, Min-quantity, Origin */}
                   <ProductCardDetailList
                     price={card.price}
                     min_quantity={`${ card.minimum_quantity } KG`}
                     origin={`${ card.city_of_origin }, ${ card.province_of_origin }, ${ card.country_of_origin } `} />
 
-
-                  {/* Product Card Button */}
                   <CardActions>
-                    
                     <Button 
                       size="small" 
                       color="primary" 
                       variant="contained"
-                      // onClick={handleClick}
-                      href={`/ viewProduct ? ${ JSON.stringify({ id: card.id }) } `}
+                      onClick={                        
+                        e=> { e.preventDefault(); 
+                        handleViewProduct(card);
+                      }}
                       >
                         View Product
                     </Button>
@@ -219,7 +229,6 @@ export default function Album() {
                         });
                         if(error){
                           console.log("erooorr")
-                          // console.log(error)
                         } else{
                           console.log("Successfully regisered");
                           // return <Redirect to='/login' />;
@@ -244,7 +253,7 @@ export default function Album() {
   return (
     <React.Fragment>
       <CssBaseline />
-      <NavigationBar />
+      <NavigationBar userId={"5edab39c6c09ee1e30cae600"}/>
       <main>
         
         <Container className={classes.cardGrid} maxWidth="md">

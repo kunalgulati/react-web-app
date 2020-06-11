@@ -167,7 +167,8 @@ class CustomPaginationActionsTable extends React.Component {
     return (
       <React.Fragment>
 
-        <NavigationBar className={classes.temp} />
+        <NavigationBar className={classes.temp}  userId={"5edab39c6c09ee1e30cae600"}/>
+      
         <main>
           <Container className={classes.cardGrid} maxWidth="md">
             <Typography align="left">{"Order Histroy"}</Typography>

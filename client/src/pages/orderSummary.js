@@ -27,6 +27,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
 
+
 // Template Based on@ https://dribbble.com/shots/5933374-The-bag/attachments
 
 const drawerWidth = 240;
@@ -61,12 +62,10 @@ const useStyles = makeStyles(theme => ({
 export default function OrderSummary() {
   const classes = useStyles();
 
-
   return (
     <React.Fragment>
       <CssBaseline />
-      <NavigationBar position="fixed" className={classes.appBar}>
-      </NavigationBar>
+      <NavigationBar position="fixed" className={classes.appBar} userId={"5edab39c6c09ee1e30cae600"}/>
       <Drawer
         className={classes.drawer}
         variant="permanent"
