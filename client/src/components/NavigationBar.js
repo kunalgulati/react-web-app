@@ -18,8 +18,9 @@ import Button from '@material-ui/core/Button';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
 /** GraphQl Query */
-import gql from 'graphql-tag'
+import gql from 'graphql-tag';
 import { useQuery } from "@apollo/react-hooks";
+import Router from "next/router";
 
 const GET_CART_ITEM_QUANTITY = gql`
   query itemQuantityList($userId: ObjectId) {
@@ -151,6 +152,14 @@ export default function NavigatinBar(props) {
     handleMobileMenuClose();
   };
 
+  const handleMenuProfileClick = () => {
+    setAnchorEl(null);
+    handleMobileMenuClose();
+    Router.push({ 
+      pathname: '/profile',
+    })
+  };
+
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
@@ -167,7 +176,7 @@ export default function NavigatinBar(props) {
       onClose={handleMenuClose}
     >
 
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem onClick={handleMenuProfileClick}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
     </Menu>
   );

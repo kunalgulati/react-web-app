@@ -152,7 +152,7 @@ const useStyles = makeStyles((theme) => ({
 
 /** Source: https://stackoverflow.com/questions/51369784/next-js-redirect-inside-of-graphql-mutation */
 function handleViewProduct(card, i){
-  console.log(card)
+  // console.log(card)
   Router.push({ 
     pathname: '/viewProduct',
     query: { productId: "5edab9b6bc81e02209015140",
