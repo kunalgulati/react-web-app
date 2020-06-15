@@ -118,7 +118,6 @@ var CartItemCount = (id) => {
   for (var i = 0; i < data.getOrderCartItems.length; i++) {
     count += data.getOrderCartItems[i].quantity;
   };
-  console.log(`count: ${count}`)
 
   return count;
 };
@@ -222,10 +221,19 @@ export default function NavigatinBar(props) {
       </MenuItem>
     </Menu>
   );
+  
+  // when using drawer, Need to change Nav bar Position to "fixed", otherwise, keep "relative"
+  var navbarPosition = "relative";
+  if(props.position === undefined){
+    navbarPosition = "relative";
+  } else{
+    navbarPosition = props.position;
+  }
 
   return (
     <div className={classes.grow}>
-      <AppBar position="relative" className={classes.appBar}>
+      {/* <AppBar position="relative" className={classes.appBar}> */}
+      <AppBar position={navbarPosition} className={classes.appBar}>
         <Toolbar>
           <IconButton
             edge="start"

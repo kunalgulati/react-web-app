@@ -73,6 +73,9 @@ app.prepare()
       server.get('login', (req, res) => {
         return app.render(req, res, '/login')
       })
+      server.get('profile', (req, res) => {
+        return app.render(req, res, '/profile')
+      })
 
       server.post('/login', passport.authenticate('local', {
         successRedirect: '/',
