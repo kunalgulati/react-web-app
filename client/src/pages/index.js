@@ -1,41 +1,60 @@
-import { StyleSheet, Text, View } from 'react-native'
+import React from 'react';
+import NavigationBar from '../components/NavigationBar';
+import ProductHero from '../views/ProductHero';
+import ProductValues from '../views/ProductValues';
+import ProductHowItWorks from '../views/ProductHowItWorks';
+import Footer from '../components/Footer';
 
-export default function App(props) {
+// https://github.com/mui-org/material-ui/tree/master/examples/ssr
+export default function App() {
   return (
-    <View style={styles.container}>
-      <Text accessibilityRole="header" style={styles.text}>
-        React Native for Web & Next.js
-      </Text>
-
-      <Text style={styles.link} accessibilityRole="link" href={`/alternate`}>
-        A universal link
-      </Text>
-
-      <View style={styles.textContainer}>
-        <Text accessibilityRole="header" aria-level="2" style={styles.text}>
-          Subheader
-        </Text>
-      </View>
-    </View>
-  )
+    <React.Fragment>
+      <NavigationBar />
+      <ProductHero />
+      {/* <ProductValues /> */}
+      <ProductHowItWorks />
+      <Footer />
+    </React.Fragment>
+  );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    flexGrow: 1,
-    justifyContent: 'center',
-  },
-  link: {
-    color: 'blue',
-  },
-  textContainer: {
-    alignItems: 'center',
-    marginTop: 16,
-  },
-  text: {
-    alignItems: 'center',
-    fontSize: 24,
-    marginBottom: 24,
-  },
-})
+
+// export default function App(props) {
+//   return (
+//     <View style={styles.container}>
+//       <Text accessibilityRole="header" style={styles.text}>
+//         React Native for Web & Next.js
+//       </Text>
+
+//       <Text style={styles.link} accessibilityRole="link" href={`/alternate`}>
+//         A universal link
+//       </Text>
+
+//       <View style={styles.textContainer}>
+//         <Text accessibilityRole="header" aria-level="2" style={styles.text}>
+//           Subheader
+//         </Text>
+//       </View>
+//     </View>
+//   )
+// }
+
+// const styles = StyleSheet.create({
+//   container: {
+//     alignItems: 'center',
+//     flexGrow: 1,
+//     justifyContent: 'center',
+//   },
+//   link: {
+//     color: 'blue',
+//   },
+//   textContainer: {
+//     alignItems: 'center',
+//     marginTop: 16,
+//   },
+//   text: {
+//     alignItems: 'center',
+//     fontSize: 24,
+//     marginBottom: 24,
+//   },
+// })

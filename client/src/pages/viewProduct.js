@@ -21,44 +21,44 @@ import gql from 'graphql-tag'
 import { useQuery } from "@apollo/react-hooks";
 
 
-const GET_PRODUCT_DETAIL_QUERY = gql`
-  query get($productId: ObjectId!) {
-    getProduct(productId: $productId) {
-      id,
-      title,
-      description,
-      city_of_origin,
-      certification,
-      province_of_origin,
-      country_of_origin,
-      grade,
-      size,
-      gmo,
-      washed,
-      store_temperature_range,
-      store_humidity,
-      chill_damage_sensitive,
-      pack_weight,
-      price,
-      minimum_quantity,
-      available,
-    }
-  }
-`;
+// const GET_PRODUCT_DETAIL_QUERY = gql`
+//   query get($productId: ObjectId!) {
+//     getProduct(productId: $productId) {
+//       id,
+//       title,
+//       description,
+//       city_of_origin,
+//       certification,
+//       province_of_origin,
+//       country_of_origin,
+//       grade,
+//       size,
+//       gmo,
+//       washed,
+//       store_temperature_range,
+//       store_humidity,
+//       chill_damage_sensitive,
+//       pack_weight,
+//       price,
+//       minimum_quantity,
+//       available,
+//     }
+//   }
+// `;
 
-const getProductDescription = (id) => {
-  const { data, loading, error } = useQuery(GET_PRODUCT_DETAIL_QUERY, {
-    variables: {
-      productId: id
-    }}    
-  );
+// const getProductDescription = (id) => {
+//   const { data, loading, error } = useQuery(GET_PRODUCT_DETAIL_QUERY, {
+//     variables: {
+//       productId: id
+//     }}    
+//   );
 
-  // if (loading) return console.log("Loading");
-  if (error) return <p>ERROR</p>;
-  if (!data) return <p>Not found</p>;
-  console.log(data);
-  return  data.getProduct[0];
-};
+//   // if (loading) return console.log("Loading");
+//   if (error) return <p>ERROR</p>;
+//   if (!data) return <p>Not found</p>;
+//   console.log(data);
+//   return  data.getProduct[0];
+// };
 
 const useStyles = makeStyles((theme) => ({
 

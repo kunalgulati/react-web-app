@@ -17,6 +17,15 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 
 // Template Based on@ https://dribbble.com/shots/5933374-The-bag/attachments
 
+
+// const GET_ALL_CART_ITEMS = gql`
+//   query getGreeting($language: String!) {
+//     greeting(language: $language) {
+//       message
+//     }
+//   }
+// `;
+
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
@@ -58,7 +67,7 @@ function ListView() {
           container
           spacing={0}
           direction="column"
-          class={classes.listGrid}
+          className={classes.listGrid}
         >
           <List
             className={classes.listRoot}>
@@ -87,7 +96,7 @@ function ListView() {
                 }
               />
             </ListItem>
-            <ListItem alignItems="right" className={classes.listItemButton}>
+            <ListItem className={classes.listItemButton}>
               <Box>
                 <TextField
                   id="standard-number"
@@ -109,13 +118,16 @@ function ListView() {
             </ListItem>
           </List>
         </Grid>
-        {/* // Secon */}
+        
+        
+        
+        {/* // Second */}
         <Divider />
         <Grid
           container
           spacing={0}
           direction="column"
-          class={classes.listGrid}
+          className={classes.listGrid}
         >
           <List
             className={classes.listRoot}>
@@ -144,7 +156,7 @@ function ListView() {
                 }
               />
             </ListItem>
-            <ListItem alignItems="right" className={classes.listItemButton}>
+            <ListItem className={classes.listItemButton}>
               <Box>
                 <TextField
                   id="standard-number"

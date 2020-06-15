@@ -7,6 +7,7 @@ const OrderCartSchema = mongoose.Schema({
   },
   product_id:{
     type: mongoose.ObjectId,
+    ref: 'Products',
     required: true,
   },
   quantity:{

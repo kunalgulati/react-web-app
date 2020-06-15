@@ -1,36 +1,36 @@
-import React, { useState }  from 'react';
+import { Link } from 'react-router-dom'
+import { makeStyles } from '@material-ui/core/styles';
+import { Redirect } from 'react-router';
+import { useLocation, Route, useParams } from "react-router-dom";
+import {render} from "react-dom"
+import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Divider from '@material-ui/core/Divider';
+import FilterBar from '../components/FilterBar'
+import FolderIcon from '@material-ui/icons/Folder';
+import Footer from '../components/Footer'
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
-import Avatar from '@material-ui/core/Avatar';
-import FolderIcon from '@material-ui/icons/Folder';
-import { Link } from 'react-router-dom'
+import React, { useState }  from 'react';
+import Typography from '@material-ui/core/Typography';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
 
-
-import Footer from '../components/Footer'
 import NavigationBar from '../components/NavigationBar'
-import ViewProduct from './viewProduct'
-import { Redirect } from 'react-router';
-import { useLocation, Route, useParams } from "react-router-dom";
 import Router from 'next/router';
-
+import ViewProduct from './viewProduct'
 
 /** GraphQl Query */
 import { Query, Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
-
-import { useHistory } from 'react-router-dom';
 
 
 /** ************************************  Query  ************************************ */
@@ -85,8 +85,10 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(8, 0, 6),
   },
-  heroButtons: {
-    marginTop: theme.spacing(4),
+  cardActionButton: {
+    width: '100%',
+    color: '#19857b'
+
   },
   cardGrid: {
     paddingTop: theme.spacing(8),
@@ -119,34 +121,34 @@ const useStyles = makeStyles((theme) => ({
 
 /** Get a List of all avialable Products in the market Place from the Product Table*/
 
-function ProductCardDetailList(props) {
-  const classes = useStyles();
+// function ProductCardDetailList(props) {
+//   const classes = useStyles();
 
-  return (
-    // <Grid item xs={12} md={6}>
-    <Grid>
-      <div className={classes.cardList}>
-        <List>
-          <ListItem className={classes.listDetailText }>
-            <ListItemText primary={
-              <Typography 
-                variant="subtitle1" 
-                align="left" 
-                style={{display: 'inline-block'}}>
-                {`Price: $${ props.price }`}</Typography>
-              } />
-          </ListItem>
-          <ListItem className={classes.listDetailText}>
-            <ListItemText primary={<Typography>{"Min. Quantity: " + props.min_quantity}</Typography>} />
-          </ListItem>
-          <ListItem>
-            <ListItemText primary={<Typography>{"Origin " + props.origin}</Typography>} />
-          </ListItem>
-        </List>
-      </div>
-    </Grid>
-  );
-};
+//   return (
+//     // <Grid item xs={12} md={6}>
+//     <Grid>
+//       <div className={classes.cardList}>
+//         <List>
+//           <ListItem className={classes.listDetailText }>
+//             <ListItemText primary={
+//               <Typography 
+//                 variant="subtitle1" 
+//                 align="left" 
+//                 style={{display: 'inline-block'}}>
+//                 {`Price: $${ props.price }`}</Typography>
+//               } />
+//           </ListItem>
+//           <ListItem className={classes.listDetailText}>
+//             <ListItemText primary={<Typography>{"Min. Quantity: " + props.min_quantity}</Typography>} />
+//           </ListItem>
+//           <ListItem>
+//             <ListItemText primary={<Typography>{"Origin " + props.origin}</Typography>} />
+//           </ListItem>
+//         </List>
+//       </div>
+//     </Grid>
+//   );
+// };
 
 /** Source: https://stackoverflow.com/questions/51369784/next-js-redirect-inside-of-graphql-mutation */
 function handleViewProduct(card, i){
@@ -175,30 +177,37 @@ export default function Album() {
         if (error) return `Error! ${ error.message } `;
         
         return (
-          <Grid container spacing={4}>
+          <Grid container spacing={1}>
             {data.getAllProducts.map((card, i) => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
+              <Grid item key={card} xs={8} sm={4} md={3}>
                 <Card className={classes.card} id={"Mutation"}>
                   <CardMedia
                     className={classes.cardMedia}
-                    image="https://source.unsplash.com/random"
+                    image="https://source.unsplash.com/wXuzS9xR49M"
                     title="Image title"
                   />
                   <CardContent className={classes.cardContent}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      {card.title}
-                    </Typography>
-                    <Typography>
-                      {card.description}
-                    </Typography>
+                    <div>
+                      <Typography gutterBottom variant="subtitle2" >
+                        {card.title}
+                      </Typography>
+                      <Typography variant="caption">
+                      <LocationOnIcon fontSize="inherit"/> {`${ card.city_of_origin }, ${ card.province_of_origin }`}
+                      </Typography>
+                    </div>
+                    <Divider />  
+                    <div>
+                      <Typography gutterBottom variant="subtitle2" >
+                        {`$ ${card.price.$numberDecimal}/ Kg`}
+                      </Typography>
+                      <Typography variant="caption">
+                        {`${ card.minimum_quantity} Kgs min order`}
+                      </Typography>
+                    </div>
                   </CardContent>
-                  <ProductCardDetailList
-                    price={card.price}
-                    min_quantity={`${ card.minimum_quantity } KG`}
-                    origin={`${ card.city_of_origin }, ${ card.province_of_origin }, ${ card.country_of_origin } `} />
-
                   <CardActions>
                     <Button 
+                      className={classes.cardActionButton}
                       size="small" 
                       color="primary" 
                       variant="contained"
@@ -209,10 +218,13 @@ export default function Album() {
                       >
                         View Product
                     </Button>
-
+                    </CardActions>
+                    <CardActions>
+                    
                     <Mutation mutation={ADD_ITEM_TO_CART}>
                       { (Create, { loading, error }) => (
-                    <Button 
+                    <Button
+                    className={classes.cardActionButton} 
                     size="small" 
                     color="primary"
                     variant="contained"
@@ -222,7 +234,7 @@ export default function Album() {
                       Create(
                         {
                           variables: {
-                            userId: "5edab39c6c09ee1e30cae601",
+                            userId: "5edab39c6c09ee1e30cae600",
                             productId: "5edab9f6bc81e02209015140",
                             quantity: 1
                           }
@@ -231,8 +243,8 @@ export default function Album() {
                           console.log("erooorr")
                         } else{
                           console.log("Successfully regisered");
-                          // return <Redirect to='/login' />;
                         }
+                        // setShoppingCartCount(23);
                     }}
                     >
                       Add to Cart
@@ -254,17 +266,11 @@ export default function Album() {
     <React.Fragment>
       <CssBaseline />
       <NavigationBar userId={"5edab39c6c09ee1e30cae600"}/>
+      
       <main>
-        
+        <FilterBar />
         <Container className={classes.cardGrid} maxWidth="md">
-          {/* End hero unit */}
-          {/* <Grid container spacing={4}> */}
-          {/* Map of Cards/Products to add             */}
           <AllProducts />
-
-
-
-          {/* </Grid> */}
         </Container>
 
       </main>

@@ -27,7 +27,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
 
-
 // Template Based on@ https://dribbble.com/shots/5933374-The-bag/attachments
 
 const drawerWidth = 240;

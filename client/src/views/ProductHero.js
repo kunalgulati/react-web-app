@@ -33,7 +33,7 @@ const styles = (theme) => ({
   more: {
     marginTop: theme.spacing(2),
   },
-  buttonGrid:{
+  buttonGrid: {
     flexGrow: 1,
     width: '80%',
     padding: theme.spacing(4),
@@ -55,46 +55,45 @@ function ProductHero(props) {
       </Typography>
 
 
-      <Grid container className={classes.root} spacing={4}>
-        <Grid item xs={12}>
-          <Grid container justify="center" spacing={1}>
 
-            <Button
-              color="default"
-              variant="contained"
-              size="large"
-              className={classes.button}
-              component="a"
-              href="/register"
-            >
-              Register
-            </Button>
-
-            <Button
-              color="default"
-              variant="contained"
-              size="large"
-              className={classes.button}
-              component="a"
-              href="/login"
-            >
-              Login
-          </Button> 
+      <Grid container justify="center" spacing={3}>
+        <Grid item>
           <Button
-              color="default"
-              variant="contained"
-              size="large"
-              className={classes.button}
-              component="a"
-              href="/marketplace"
-            >
-              Marketplace
-          </Button> 
-          </Grid>
+            color="default"
+            variant="contained"
+            size="large"
+            className={classes.button}
+            component="a"
+            href="/register"
+          >
+            Register
+            </Button>
+        </Grid>
+        <Grid item>
+          <Button
+            color="default"
+            variant="contained"
+            size="large"
+            className={classes.button}
+            component="a"
+            href="/login"
+          >
+            Login
+          </Button>
+        </Grid>
+        <Grid item>
+          <Button
+            color="default"
+            variant="contained"
+            size="large"
+            className={classes.button}
+            component="a"
+            href="/marketplace"
+          >
+            Marketplace
+          </Button>
         </Grid>
       </Grid>
-
-
       <Typography variant="body2" color="inherit" className={classes.more}>
         Discover the experience
       </Typography>

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -29,25 +29,7 @@ const GET_CART_ITEM_QUANTITY = gql`
   }
 `;
 
-const CartItemCount = (id) => {
-  const { data, loading, error } = useQuery(GET_CART_ITEM_QUANTITY, 
-    {
-    variables: {
-      userId: id
-    }
-  }   
-  );
 
-  // if (loading) return console.log("Loading");
-  if (error) return <p>ERROR</p>;
-  if (!data) return <p>Not found</p>;
-  var count = 0;
-  for(var i=0; i<data.getOrderCartItems.length; i++){
-    count += data.getOrderCartItems[i].quantity;
-  };
-
-  return  count;
-};
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -120,11 +102,35 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+var CartItemCount = (id) => {
+  const { data, loading, error } = useQuery(GET_CART_ITEM_QUANTITY,
+    {
+      variables: {
+        userId: id
+      }
+    }
+  );
+
+  // if (loading) return console.log("Loading");
+  if (error) return <p>ERROR</p>;
+  if (!data) return <p>Not found</p>;
+  var count = 0;
+  for (var i = 0; i < data.getOrderCartItems.length; i++) {
+    count += data.getOrderCartItems[i].quantity;
+  };
+  console.log(`count: ${count}`)
+
+  return count;
+};
+
+
 
 export default function NavigatinBar(props) {
-  // const [shoppingCartCount, setshoppingCartCount] = useState(0);
-  var shoppingCartCount = 0;
-  shoppingCartCount = CartItemCount(props.userId);
+
+  const value = CartItemCount(props.userId);
+  // console.log(value)
+  const [shoppingCartCount, setShoppingCartCount] = useState(12);
+
 
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -161,14 +167,14 @@ export default function NavigatinBar(props) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      
+
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
     </Menu>
   );
 
   const mobileMenuId = 'primary-search-account-menu-mobile';
-  
+
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
@@ -247,7 +253,7 @@ export default function NavigatinBar(props) {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-        
+
             <Button href="marketplace"> Marketplace</Button>
             <IconButton aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={4} color="secondary">
@@ -260,7 +266,7 @@ export default function NavigatinBar(props) {
               </Badge>
             </IconButton>
             <IconButton aria-label="show 4 new mails" color="inherit" href="/orderSummary">
-              
+
               {/* CART */}
               <Badge badgeContent={shoppingCartCount} color="secondary">
                 <ShoppingCartIcon />

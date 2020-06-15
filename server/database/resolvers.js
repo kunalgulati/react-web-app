@@ -4,7 +4,6 @@ const Products = require('../models/ProductModel').Products;
 const OrderCartItems = require('../models/OrderCartModel').OrderCartItems;
 const mongoose = require('mongoose')
 
-
 // heigher the number, higher will be the time to calculate the hash 
 var saltRounds = 10;
 
@@ -24,13 +23,43 @@ const resolvers = {
     getAllProducts: () => {
       return Products.find();
     },
+    getProduct: (parent, args, context, info) => {
+      // return new Promise((resolve, reject) => {
+      //   // Products.findById(mongoose.Types.ObjectId(args.productId), 
+      //   Products.find({_id: mongoose.Types.ObjectId(args.productId) },
+      //     async (err, data) =>{
+      //       console.log(data);
+      //       if(err) reject(err);
+      //       else resolve([].push(data));
+      //     }
+      //   )}
+      // );
+      return Products.find({_id: mongoose.Types.ObjectId(args.productId) })
+    },
     // Cart
     getOrderCartItems: (parent, args, context, info) => {
       var orderCartItem = OrderCartItems.find({ user_id: mongoose.Types.ObjectId(args.userId) });
       if (!orderCartItem) { return null; }
-      else { return orderCartItem }
-      // return OrderCartItems.find()
+      else { return orderCartItem }      
     },
+    getOrderSummaryProduct: (parent, args, context, info) => {
+      var orderCartItem = OrderCartItems.find({ user_id: mongoose.Types.ObjectId(args.userId) }, (err, orderCartItem)=>{
+        if (!orderCartItem) { return null; }
+        // else { return orderCartItem }
+        console.log(orderCartItem)
+        var productIds = [];
+        for(var i=0; i<orderCartItem.length; i++ ){
+          productIds.push(orderCartItem[i].product_id);
+        }
+        return new Promise((resolve, reject) => {
+          Products.where('_id').in(productIds).exec((err, data) => {
+            if (err) reject(err)
+            else resolve(data)
+          })
+        })
+      }
+      );
+    }
   },
   Mutation: {
     /** **************************************** User **************************************** */
@@ -121,7 +150,7 @@ const resolvers = {
             })
           } else {
             /** The product doesn't already exisits in the cart;
-             * So we need to update it's quantity */ 
+             * So we need to update it's quantity */             
             const cartItem = new OrderCartItems({
               user_id: args.userId,
               product_id: args.productId,

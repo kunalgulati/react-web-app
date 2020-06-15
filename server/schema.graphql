@@ -6,6 +6,7 @@ const typeDefs = gql`
   scalar ObjectId
   scalar Decimal128
 
+
   type Mutation {
     createUser(
       firstName: String!, 
@@ -102,7 +103,9 @@ const typeDefs = gql`
     getUsers: [User]
     getUser(email: String): [User]
     getAllProducts: [Product]
+    getProduct(productId: ObjectId!): [Product]
     getOrderCartItems(userId: ObjectId): [OrderCartItem]
+    getOrderSummaryProduct (userId: ObjectId): [Product]
   }
 
 `;

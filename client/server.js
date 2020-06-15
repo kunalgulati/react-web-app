@@ -69,11 +69,7 @@ app.prepare()
 
       server.use(auth.initialize);
       server.use(auth.session);
-
-      server.get('home', (req, res) => {
-        return app.render(req, res, '/home')
-      })
-
+      
       server.get('login', (req, res) => {
         return app.render(req, res, '/login')
       })
