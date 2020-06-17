@@ -16,6 +16,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Button from '@material-ui/core/Button';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import Divider from '@material-ui/core/Divider'
 
 /** GraphQl Query */
 import gql from 'graphql-tag';
@@ -29,8 +30,6 @@ const GET_CART_ITEM_QUANTITY = gql`
     }
   }
 `;
-
-
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -128,9 +127,7 @@ var CartItemCount = (id) => {
 export default function NavigatinBar(props) {
 
   const value = CartItemCount(props.userId);
-  // console.log(value)
   const [shoppingCartCount, setShoppingCartCount] = useState(12);
-
 
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -164,6 +161,12 @@ export default function NavigatinBar(props) {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  const handleForkchaClick = () =>{
+    Router.push({ 
+      pathname: '/',
+    })
+  };
+
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
@@ -175,9 +178,14 @@ export default function NavigatinBar(props) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-
+      <MenuItem><Typography variant="subtitle2">kunal Gulati (Name TODO)</Typography></MenuItem>
+      <MenuItem><Typography variant="caption">kunal@forkcha.com (Email TODO)</Typography></MenuItem>
+      <Divider />
       <MenuItem onClick={handleMenuProfileClick}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleMenuClose}>Help</MenuItem>
+      <Divider />
+      <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
+
     </Menu>
   );
 
@@ -193,22 +201,6 @@ export default function NavigatinBar(props) {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <IconButton aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="secondary">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton aria-label="show 11 new notifications" color="inherit">
-          <Badge badgeContent={11} color="secondary">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
       <MenuItem>
         <IconButton aria-label="show 11 new notifications" color="inherit" href="/orderSummary">
           <Badge badgeContent={shoppingCartCount} color="secondary">
@@ -250,11 +242,9 @@ export default function NavigatinBar(props) {
             color="inherit"
             aria-label="open drawer"
           >
-            <MenuIcon />
           </IconButton>
-          <Typography className={classes.title} variant="h6" noWrap>
-            ForkCha
-          </Typography>
+          <MenuItem onClick={handleForkchaClick}> <Typography className={classes.title} variant="h6" noWrap> ForkCha </Typography> </MenuItem>
+            
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -272,18 +262,7 @@ export default function NavigatinBar(props) {
           <div className={classes.sectionDesktop}>
 
             <Button href="marketplace"> Marketplace</Button>
-            <IconButton aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <MailIcon />
-              </Badge>
-            </IconButton>
-            <IconButton aria-label="show 17 new notifications" color="inherit">
-              <Badge badgeContent={17} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
             <IconButton aria-label="show 4 new mails" color="inherit" href="/orderSummary">
-
               {/* CART */}
               <Badge badgeContent={shoppingCartCount} color="secondary">
                 <ShoppingCartIcon />
