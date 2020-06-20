@@ -172,14 +172,14 @@ const ProductDescription = (id) => {
                   <ListItemText primary={
                     <Typography variant="subtitle2">Serious Damage ≤ 10 %</Typography>}
                     secondary={
-                      <Typography variant="caption">Seeder > 5”*; Excessive wrapper leaves; Bruising on 5 or more head leaves. *During March - May, seeder must be</Typography>}
+                      <Typography variant="caption">Seeder 5”*; Excessive wrapper leaves; Bruising on 5 or more head leaves. *During March - May, seeder must be</Typography>}
                   />
                 </ListItem>
                 <ListItem className={classes.listItemStyle}>
                   <ListItemText primary={
                     <Typography variant="subtitle2">{`Decay & Mold ≤ 2 %`}</Typography>}
                     secondary={
-                      <Typography variant="caption">Seeder > 5”*; Excessive wrapper leaves; Bruising on 5 or more head leaves. *During March - May, seeder must be</Typography>}
+                      <Typography variant="caption">Seeder 5”*; Excessive wrapper leaves; Bruising on 5 or more head leaves. *During March - May, seeder must be</Typography>}
                   />
                 </ListItem>
               </List>

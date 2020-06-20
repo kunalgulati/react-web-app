@@ -1,8 +1,7 @@
 import React from 'react';
-import NavigationBar from '../components/NavigationBar';
-import ProductHero from '../views/ProductHero';
-import ProductValues from '../views/ProductValues';
-import ProductHowItWorks from '../views/ProductHowItWorks';
+import NavigationBar from '../components/buyer/NavigationBar';
+import ProductHero from '../views/buyer/ProductHero';
+import ProductHowItWorks from '../views/buyer/ProductHowItWorks';
 import Footer from '../components/Footer';
 
 // https://github.com/mui-org/material-ui/tree/master/examples/ssr
@@ -11,7 +10,6 @@ export default function App() {
     <React.Fragment>
       <NavigationBar />
       <ProductHero />
-      {/* <ProductValues /> */}
       <ProductHowItWorks />
       <Footer />
     </React.Fragment>

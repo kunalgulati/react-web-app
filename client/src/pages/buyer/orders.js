@@ -17,8 +17,8 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 
-import NavigationBar from '../components/NavigationBar';
-import Footer from '../components/Footer';
+import NavigationBar from '../../components/buyer/NavigationBar';
+import Footer from '../../components/Footer';
 
 const actionsStyles = theme => ({
   root: {

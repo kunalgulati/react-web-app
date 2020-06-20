@@ -1,14 +1,13 @@
 import React from 'react';
-import { fade, makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
+import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 
-import DatePickerComponent from './marketplaceFilter/DatePicker';
-import Commodity from './marketplaceFilter/Commodity';
-import Certification from './marketplaceFilter/Certification';
-import Grade from './marketplaceFilter/Grade';
-import PackageType from './marketplaceFilter/PackageType';
-import Location from './marketplaceFilter/Location';
+import DatePickerComponent from '../marketplaceFilter/DatePicker';
+import Commodity from '../marketplaceFilter/Commodity';
+import Certification from '../marketplaceFilter/Certification';
+import Grade from '../marketplaceFilter/Grade';
+import PackageType from '../marketplaceFilter/PackageType';
+import Location from '../marketplaceFilter/Location';
 import { Typography } from '@material-ui/core';
 
 

@@ -18,10 +18,10 @@ import ContactMailIcon from '@material-ui/icons/ContactMail';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 
-import NavigationBar from '../components/NavigationBar';
-import ProfileForm from '../views/userProfile/ProfileForm';
-import BuyerInformationForm from '../views/userProfile/BuyerInformationForm';
-import AccountContactForm from '../views/userProfile/AccountContactForm';
+import NavigationBar from '../../components/buyer/NavigationBar';
+import ProfileForm from '../../views/buyer/userProfile/ProfileForm';
+import BuyerInformationForm from '../../views/buyer/userProfile/BuyerInformationForm';
+import AccountContactForm from '../../views/buyer/userProfile/AccountContactForm';
 
 
 const drawerWidth = 240;

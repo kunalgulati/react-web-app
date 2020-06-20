@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
-import Typography from '../components/Typography';
+import Typography from '../../components/buyer/Typography';
 
 const styles = (theme) => ({
   root: {

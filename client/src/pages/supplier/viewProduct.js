@@ -12,9 +12,9 @@ import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import { withRouter } from 'next/router';
 
-import Footer from '../components/Footer'
-import NavigationBar from '../components/NavigationBar'
-import ViewProductContent from '../views/ViewProductContent'
+import Footer from '../../components/Footer'
+import NavigationBar from '../../components/supplier/NavigationBar'
+import ViewProductContent from '../../views/buyer/ViewProductContent'
 
 /** GraphQl Query */
 import gql from 'graphql-tag'
@@ -75,8 +75,8 @@ export default withRouter(function ViewProduct(props) {
   return (
     <React.Fragment>
       <CssBaseline />
-      <NavigationBar userId={"5edab39c6c09ee1e30cae600"}/>
-      <ViewProductContent productId={props.router.query.productId} />
+      <NavigationBar/>
+      <ViewProductContent productId={"props.router.query.productId"} />
       <Footer />
     </React.Fragment>
 );

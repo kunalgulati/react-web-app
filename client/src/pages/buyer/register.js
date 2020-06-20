@@ -15,7 +15,7 @@ import Container from '@material-ui/core/Container';
 import { withRouter } from 'react-router-dom';
 
 
-import NavigationBar from '../components/NavigationBar';
+import NavigationBar from '../../components/buyer/NavigationBar';
 
 /** GraphQl Query */
 import { Mutation } from '@apollo/react-components';

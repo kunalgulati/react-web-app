@@ -70,37 +70,55 @@ app.prepare()
       server.use(auth.initialize);
       server.use(auth.session);
       
-      server.get('login', (req, res) => {
-        return app.render(req, res, '/login')
+      /* ****************************************** BUYER ROUTES ****************************************** */
+      server.get('buyer/login', (req, res) => {
+        return app.render(req, res, 'buyer/login')
       })
-      server.get('profile', (req, res) => {
-        return app.render(req, res, '/profile')
+      server.get('buyer/profile', (req, res) => {
+        return app.render(req, res, 'buyer/profile')
       })
 
-      server.post('/login', passport.authenticate('local', {
+      server.post('buyer/login', passport.authenticate('local', {
         successRedirect: '/',
         failureRedirect: '/register'
       }))
 
-      server.get('marketplace', (req, res) => {
-        return app.render(req, res, '/marketplace')
+      server.get('buyer/marketplace', (req, res) => {
+        return app.render(req, res, 'buyer/marketplace')
       })
 
-      server.get('register', (req, res) => {
-        return app.render(req, res, '/register')
+      server.get('buyer/register', (req, res) => {
+        return app.render(req, res, 'buyer/register')
       })
 
-      server.get('orderSummary', (req, res) => {
-        return app.render(req, res, '/orderSummary')
+      server.get('buyer/orderSummary', (req, res) => {
+        return app.render(req, res, 'buyer/orderSummary')
       })
-      server.get('orders', (req, res) => {
-        return app.render(req, res, '/viewProduct')
+      server.get('buyer/orders', (req, res) => {
+        return app.render(req, res, 'buyer/viewProduct')
       })
 
       // Delete
-      server.get('viewProduct', (req, res) => {
-        return app.render(req, res, '/viewProduct')
+      server.get('buyer/viewProduct', (req, res) => {
+        return app.render(req, res, 'buyer/viewProduct')
       })
+
+      /* ****************************************** SUPPLIER ROUTES ****************************************** */
+      server.get('supplier/register', (req, res) => {
+        return app.render(req, res, 'supplier/register')
+      })
+      server.get('supplier/login', (req, res) => {
+        return app.render(req, res, 'supplier/login')
+      })
+      server.get('supplier/home', (req, res) => {
+        return app.render(req, res, 'supplier/home')
+      })
+      server.get('supplier/viewProduct', (req, res) => {
+        return app.render(req, res, 'supplier/viewProduct')
+      })
+
+
+
 
 
       server.get('*', (req, res) => {

@@ -9,11 +9,9 @@ import Button from '@material-ui/core/Button';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Drawer from '@material-ui/core/Drawer';
 import Divider from '@material-ui/core/Divider';
-import Footer from '../components/Footer';
+import Footer from '../../components/Footer';
 import Grid from '@material-ui/core/Grid';
 
-import NavigationBar from '../components/NavigationBar';
-import OrderList from '../views/OrderList';
 import Paper from '@material-ui/core/Paper';
 
 
@@ -25,6 +23,9 @@ import CardMedia from '@material-ui/core/CardMedia';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+
+import NavigationBar from '../../components/buyer/NavigationBar';
+import OrderList from '../../views/buyer/OrderList';
 
 
 // Template Based on@ https://dribbble.com/shots/5933374-The-bag/attachments

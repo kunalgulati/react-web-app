@@ -7,10 +7,10 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import Copyright from '../components/Copyright'
 
-import NavigationBar from '../components/NavigationBar'
-import LoginForm from '../views/LoginForm'
+import Copyright from '../../components/Copyright'
+import NavigationBar from '../../components/supplier/NavigationBar'
+import LoginForm from '../../views/supplier/LoginForm'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,30 +45,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignInSide() {
   const classes = useStyles();
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log("YES MOTHER FO");
-
-    fetch('http://localhost:3000/login',{
-        method: "POST",
-        body: JSON.stringify({
-          email: "test@test.com",
-          password: "testtest"
-        }),
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-      }).then(response => {
-        console.log("dndbjd");
-        // console.log(({'response': "jdjdjd"}))
-        console.log(response);
-    }).catch(error =>{
-      console.log(error)
-    })
- 
-  };
 
   return (
     <Grid container component="main" className={classes.root}>
