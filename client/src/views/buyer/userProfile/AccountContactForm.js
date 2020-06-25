@@ -19,8 +19,8 @@ export default function ProfileForm() {
     <React.Fragment>
       <Typography variant="h5" align="left">Billing Account Contact</Typography>
       <Typography variant="caption" align="left">This contact is the individual in your organization responsible for approving payment transactions.
-</Typography>
-      
+      </Typography>
+
       <form noValidate className={classes.root}>
         <Grid container spacing={2}
           direction="column"
@@ -68,8 +68,8 @@ export default function ProfileForm() {
               id="billingAddress"
               label="Billing Address"
               name="billingAddress"
-              // autoComplete="email"
-              // onInput={event => setEmail(event.target.value)}
+            // autoComplete="email"
+            // onInput={event => setEmail(event.target.value)}
             />
           </Grid>
           <Grid item xs={12} className={classes.gridItem}>
@@ -79,8 +79,8 @@ export default function ProfileForm() {
               id="billingAddress"
               label="City"
               name="billingAddress"
-              // autoComplete="email"
-              // onInput={event => setEmail(event.target.value)}
+            // autoComplete="email"
+            // onInput={event => setEmail(event.target.value)}
             />
           </Grid>
           <Grid item xs={12} className={classes.gridItem}>
@@ -90,8 +90,8 @@ export default function ProfileForm() {
               id="billingAddress"
               label="Province"
               name="billingAddress"
-              // autoComplete="email"
-              // onInput={event => setEmail(event.target.value)}
+            // autoComplete="email"
+            // onInput={event => setEmail(event.target.value)}
             />
           </Grid>
           <Grid item xs={12} className={classes.gridItem}>
@@ -101,8 +101,8 @@ export default function ProfileForm() {
               id="billingAddress"
               label="Postal Code"
               name="billingAddress"
-              // autoComplete="email"
-              // onInput={event => setEmail(event.target.value)}
+            // autoComplete="email"
+            // onInput={event => setEmail(event.target.value)}
             />
           </Grid>
           <Grid item xs={12} className={classes.gridItem}>

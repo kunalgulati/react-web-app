@@ -64,7 +64,7 @@ function ProductHero(props) {
             size="large"
             className={classes.button}
             component="a"
-            href="/register"
+            href="/buyer/register"
           >
             Register
             </Button>
@@ -76,7 +76,7 @@ function ProductHero(props) {
             size="large"
             className={classes.button}
             component="a"
-            href="/login"
+            href="/buyer/login"
           >
             Login
           </Button>
@@ -88,7 +88,7 @@ function ProductHero(props) {
             size="large"
             className={classes.button}
             component="a"
-            href="/marketplace"
+            href="/buyer/marketplace"
           >
             Marketplace
           </Button>

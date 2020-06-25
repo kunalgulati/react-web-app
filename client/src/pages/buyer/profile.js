@@ -4,7 +4,7 @@ import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import Paper from '@material-ui/core/Paper';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 
@@ -19,9 +19,11 @@ import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 
 import NavigationBar from '../../components/buyer/NavigationBar';
+
 import ProfileForm from '../../views/buyer/userProfile/ProfileForm';
 import BuyerInformationForm from '../../views/buyer/userProfile/BuyerInformationForm';
 import AccountContactForm from '../../views/buyer/userProfile/AccountContactForm';
+import DeliverySetupForm from '../../views/buyer/userProfile/DeliverySetupForm';
 
 
 const drawerWidth = 240;
@@ -53,33 +55,34 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
+
 export default function UserProfile() {
   const classes = useStyles();
+
+  const [loadForm, setLoadForm] = useState(0);
 
   const MainListItems = () => {
     return (
       <React.Fragment>
-        <ListItem
-          button
-          onClick={handleProfileClick}>
+        <ListItem button onClick={handleProfileClick}>
           <ListItemIcon>
             <PersonIcon />
           </ListItemIcon>
           <ListItemText primary="Profile" />
         </ListItem>
-        <ListItem button>
+        <ListItem button onClick={handleBuyerInformationClick}>
           <ListItemIcon>
             <ContactMailIcon />
           </ListItemIcon>
           <ListItemText primary="Buyer Information" />
         </ListItem>
-        <ListItem button>
+        <ListItem button onClick={handleAccountInformationClick}>
           <ListItemIcon>
             <AttachMoneyIcon />
           </ListItemIcon>
           <ListItemText primary="Account Contact" />
         </ListItem>
-        <ListItem button>
+        <ListItem button onClick={handleDeliverySetupClick}>
           <ListItemIcon>
             <LocalShippingIcon />
           </ListItemIcon>
@@ -90,7 +93,35 @@ export default function UserProfile() {
   };
 
   const handleProfileClick = () => {
-    console.log("donesss")
+    setLoadForm(0)
+  }
+  const handleAccountInformationClick = () => {
+    setLoadForm(1)
+  }
+  const handleBuyerInformationClick = () => {
+    setLoadForm(2)
+  }
+  const handleDeliverySetupClick = () => {
+    setLoadForm(3)
+  }
+
+  const LoadFormFunction = () =>{
+    switch(loadForm) {
+      case 0:
+        return <ProfileForm/>
+        break;
+      case 1:
+        return <AccountContactForm/>;
+        break;
+      case 2:
+        return <BuyerInformationForm/>
+        break;
+      case 3:
+        return <DeliverySetupForm/>
+        break;
+      default:
+        return <AccountContactForm/>;
+    }
   }
 
   return (
@@ -119,9 +150,7 @@ export default function UserProfile() {
       </Drawer>
       <main className={classes.content}>
         <Toolbar />
-        {/* <ProfileForm /> */}
-        {/* <BuyerInformationForm /> */}
-        <AccountContactForm />
+        <LoadFormFunction/>
       </main>
     </div>
   );

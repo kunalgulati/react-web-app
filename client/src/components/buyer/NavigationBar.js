@@ -153,7 +153,7 @@ export default function NavigatinBar(props) {
     setAnchorEl(null);
     handleMobileMenuClose();
     Router.push({ 
-      pathname: '/profile',
+      pathname: '/buyer/profile',
     })
   };
 
