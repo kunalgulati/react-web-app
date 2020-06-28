@@ -2,10 +2,12 @@ const bcrypt = require('bcryptjs')
 const Users = require('../models/UserModel').Users;
 const Products = require('../models/ProductModel').Products;
 const OrderCartItems = require('../models/OrderCartModel').OrderCartItems;
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const { map } = require('lodash');
 
 // heigher the number, higher will be the time to calculate the hash 
 var saltRounds = 10;
+
 
 const resolvers = {
   Query: {
@@ -34,31 +36,75 @@ const resolvers = {
       //     }
       //   )}
       // );
-      return Products.find({_id: mongoose.Types.ObjectId(args.productId) })
+      return Products.find({ _id: mongoose.Types.ObjectId(args.productId) })
     },
     // Cart
     getOrderCartItems: (parent, args, context, info) => {
-      var orderCartItem = OrderCartItems.find({ user_id: mongoose.Types.ObjectId(args.userId) });
+      let orderCartItem = OrderCartItems.find({ user_id: mongoose.Types.ObjectId(args.userId) });
       if (!orderCartItem) { return null; }
-      else { return orderCartItem }      
+      else { return orderCartItem }
     },
     getOrderSummaryProduct: (parent, args, context, info) => {
-      var orderCartItem = OrderCartItems.find({ user_id: mongoose.Types.ObjectId(args.userId) }, (err, orderCartItem)=>{
-        if (!orderCartItem) { return null; }
-        // else { return orderCartItem }
-        console.log(orderCartItem)
-        var productIds = [];
-        for(var i=0; i<orderCartItem.length; i++ ){
-          productIds.push(orderCartItem[i].product_id);
-        }
-        return new Promise((resolve, reject) => {
-          Products.where('_id').in(productIds).exec((err, data) => {
-            if (err) reject(err)
-            else resolve(data)
-          })
-        })
+      /** 
+       * 1. Fetch the products under the user name 
+       * 2. Get associated product details for those Cart Items and make a map
+      */
+      let productMap = new Map();
+
+      const makeProductMap = async (orderCartItem) => {orderCartItem.map(eachItem => { productMap.set(eachItem.product_id, eachItem)})};
+      const getCartItems = async (userId) =>{
+        OrderCartItems.find({ user_id: mongoose.Types.ObjectId(userId) }, (err, result) => {
+          if (!result) { return null; }
+          else { return result }
+        });
+      };
+      const getProductInformation = async () => {
+        Products.where('_id').in(productIds).exec((err, data) => {
+        });
       }
-      );
+
+      let allItem = await getCartItems(args.userId);
+      await makeProductMap(allItem);
+      getProductInformation();
+      
+
+      // var orderCartItem = OrderCartItems.find({ user_id: mongoose.Types.ObjectId(args.userId) }, (err, orderCartItem) => {
+      //   if (!orderCartItem) { return null; }
+      //   // else { return orderCartItem }
+      //   console.log(orderCartItem)
+      //   // var productIds = [];
+      //   // for(var i=0; i<orderCartItem.length; i++ ){
+      //   //   productIds.push(orderCartItem[i].product_id);
+      //   // }
+      //   combine(orderCartItem);
+      // });
+
+      // var orderCartItem = OrderCartItems.find({ user_id: mongoose.Types.ObjectId(args.userId) });
+      //   if (!orderCartItem) { return null; }
+      //   else {
+      //     // console.log(orderCartItem)
+      //     var productIds = [];
+      //     for(var i=0; i<orderCartItem.length; i++ ){
+      //       productIds.push(orderCartItem[i].product_id);
+      //     }
+      //     console.log(productIds.toString());
+      //     // Find the related products 
+      //     if(productIds !== []){
+      //     }
+      //     console.log(temp);
+      //     return null;
+
+      //     return new Promise((resolve, reject) => {
+      //       Products.where('_id').in(productIds).exec((err, data) => {
+      //         if (err) reject(err)
+      //         else resolve(data)
+      //       })
+      //     }) 
+      //   }
+      return null;
+
+
+
     }
   },
   Mutation: {
@@ -86,11 +132,11 @@ const resolvers = {
       //WRONG
       //TODO
       return new Promise((resolve, object) => {
-        Users.findOneAndUpdate({ _id: input.id }, input, { new: true }, 
+        Users.findOneAndUpdate({ _id: input.id }, input, { new: true },
           (err, friend) => {
-          if (err) reject(err)
-          else resolve(friend)
-        })
+            if (err) reject(err)
+            else resolve(friend)
+          })
       })
     },
     /** ************************************** Product **************************************** */
@@ -123,7 +169,7 @@ const resolvers = {
           else resolve(newProduct)
         })
       })
-    },    
+    },
     /** ************************************* Order Cart **************************************** */
     addProductCart: (parent, args, context, info) => {
       const filter = {
@@ -133,24 +179,24 @@ const resolvers = {
         ]
       };
 
-      var result = {};
-      return new Promise((resolve, reject) => {
+      const addProduct = (args) => {
         OrderCartItems.find(filter, function (err, data) {
+          /** 
+           * If there is an Error
+           * If the product already exists in the cart, then just update the quantity
+           * If the product doesn't exist in the cart, then create a new product
+          */
           if (err) { return err }
           else if (data.length == 1) {
-            /** If data.length == 1 means the product already exisits in the Cart;
-             * So we need to update it's quantity */ 
-            result = data[0];
-            var newQuantity = result.quantity + args.quantity;
-            OrderCartItems.updateOne(filter, { quantity: newQuantity },
-                (err) => {
-                  console.log(err)
-                  if (err) reject(err)
-                  else resolve(true)
-            })
+            if (args.quantity < 0) { return new Error("Cannot give a new value for quantity") }
+
+            args.quantity = data[0].quantity + args.quantity;
+            OrderCartItems.updateOne(filter, { quantity: args.quantity },
+              (err) => {
+                if (err) { return err; }
+                else { return args }
+              })
           } else {
-            /** The product doesn't already exisits in the cart;
-             * So we need to update it's quantity */             
             const cartItem = new OrderCartItems({
               user_id: args.userId,
               product_id: args.productId,
@@ -158,12 +204,13 @@ const resolvers = {
             });
             cartItem.id = cartItem._id;
             cartItem.save((err) => {
-              if (err) reject(err)
-              else resolve(true)
+              if (err) return err
+              else return cartItem;
             })
           }
         });
-      })
+      }
+      addProduct(args);
     },
   }
 };
