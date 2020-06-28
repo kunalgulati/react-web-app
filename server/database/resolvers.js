@@ -63,8 +63,8 @@ const resolvers = {
         });
       }
 
-      let allItem = await getCartItems(args.userId);
-      await makeProductMap(allItem);
+      let allItem = getCartItems(args.userId);
+       makeProductMap(allItem);
       getProductInformation();
       
 
