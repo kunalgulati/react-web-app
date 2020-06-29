@@ -12,45 +12,6 @@ import gql from 'graphql-tag'
 import { useQuery } from "@apollo/react-hooks";
 
 
-// const GET_PRODUCT_DETAIL_QUERY = gql`
-//   query get($productId: ObjectId!) {
-//     getProduct(productId: $productId) {
-//       id,
-//       title,
-//       description,
-//       city_of_origin,
-//       certification,
-//       province_of_origin,
-//       country_of_origin,
-//       grade,
-//       size,
-//       gmo,
-//       washed,
-//       store_temperature_range,
-//       store_humidity,
-//       chill_damage_sensitive,
-//       pack_weight,
-//       price,
-//       minimum_quantity,
-//       available,
-//     }
-//   }
-// `;
-
-// const getProductDescription = (id) => {
-//   const { data, loading, error } = useQuery(GET_PRODUCT_DETAIL_QUERY, {
-//     variables: {
-//       productId: id
-//     }}    
-//   );
-
-//   // if (loading) return console.log("Loading");
-//   if (error) return <p>ERROR</p>;
-//   if (!data) return <p>Not found</p>;
-//   console.log(data);
-//   return  data.getProduct[0];
-// };
-
 const useStyles = makeStyles((theme) => ({
 
 }));
@@ -58,16 +19,12 @@ const useStyles = makeStyles((theme) => ({
 
 export default withRouter(function ViewProduct(props) {
   const classes = useStyles();
-  // var productDescription = {};
-
-  // productDescription = getProductDescription(props.router.query.productId)
-  // console.log("product id : " +props.router.query.productId)
 
   return (
     <React.Fragment>
       <CssBaseline />
       <NavigationBar userId={"5edab39c6c09ee1e30cae600"}/>
-      <ViewProductContent productId={props.router.query.productId} />
+      <ViewProductContent productData={props.router.query}/>
       <Footer />
     </React.Fragment>
 );
