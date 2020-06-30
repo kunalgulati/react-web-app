@@ -14,6 +14,28 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
+/** GraphQl Query */
+import { Query, Mutation } from 'react-apollo'
+import gql from 'graphql-tag'
+
+import { useMutation } from '@apollo/react-hooks';
+
+
+
+/** ************************************  Mutation  ************************************ */
+const ADD_ITEM_TO_CART = gql`
+  mutation Create(
+    $userId: ObjectId!
+    $productId: ObjectId!
+    $quantity: Int!
+  ) {
+  addProductCart(
+    userId: $userId
+    productId: $productId
+    quantity: $quantity
+  ) 
+}`
+
 
 const useStyles = makeStyles((theme) => ({
   backButton: {
@@ -42,7 +64,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ProductDescription = (productData) => {
+  /** Hooks  */
+  const [addItemCart, { itemData }] = useMutation(ADD_ITEM_TO_CART);
+
   const classes = useStyles();
+
   let data = productData.productData;
 
   const gmoText = (gmoBooleanValue) => {
@@ -55,11 +81,12 @@ const ProductDescription = (productData) => {
     return "No"
   }
 
+
   return (
     <Grid container justify="center" spacing={2} className={classes.root}>
 
       {/* Top Header */}
-      <Grid container xs={12}>
+      <Grid container>
         <Grid item xs={6}>
           <CardContent className={classes.cardContent}>
             <CardMedia
@@ -81,7 +108,18 @@ const ProductDescription = (productData) => {
                   {data.description}
                 </Typography>
               </Typography><br></br>
-              <Button variant="contained" color="primary" className={classes.backButton}>
+              <Button variant="contained" color="primary" className={classes.backButton} onClick={e => {
+                    e.preventDefault();
+                    addItemCart({ 
+                      variables: {
+                        // TODO: Make user Id Dynamic 
+                        userId: "5edab39c6c09ee1e30cae600",
+                        productId: data.id,
+                        quantity: 1
+                      }
+                    });
+                }}
+              >
                 Add to Cart
               </Button>
             </Paper>
@@ -237,3 +275,13 @@ export default function ViewProductContent(props) {
   );
 };
 
+
+
+
+/** 
+ * TODO: 
+    * 1. Make user Id Dynamic for Add Item to Cart mutation
+    * 2. 
+    * 
+ * 
+*/

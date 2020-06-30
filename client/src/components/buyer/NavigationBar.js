@@ -125,10 +125,6 @@ var CartItemCount = (id) => {
 
 
 export default function NavigatinBar(props) {
-
-  const value = CartItemCount(props.userId);
-  const [shoppingCartCount, setShoppingCartCount] = useState(12);
-
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -167,6 +163,28 @@ export default function NavigatinBar(props) {
     })
   };
 
+  /** GraphQL Hooks */
+  const getCartQuantity = (currentUserId) => {
+    const { loading, error, data } = useQuery(GET_CART_ITEM_QUANTITY, {
+      variables: { userId: currentUserId },
+    });
+    if (loading) return <p>Loading ...</p>;
+    if (error) {
+      // return  `Error! ${ error.message } `;
+      return 0
+    }
+    if (!data) return 0;
+    
+    let count = 0;
+    for (var i = 0; i < data.getOrderCartItems.length; i++) {
+      count += data.getOrderCartItems[i].quantity;
+    };
+  
+    return count;
+  }
+
+  var cartValue = getCartQuantity(props.userId);
+
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
@@ -203,7 +221,7 @@ export default function NavigatinBar(props) {
     >
       <MenuItem>
         <IconButton aria-label="show 11 new notifications" color="inherit" href="/buyer/orderSummary">
-          <Badge badgeContent={shoppingCartCount} color="secondary">
+          <Badge badgeContent={cartValue} color="secondary">
             <ShoppingCartIcon />
           </Badge>
         </IconButton>
@@ -261,10 +279,10 @@ export default function NavigatinBar(props) {
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
 
-            <Button href="marketplace"> Marketplace</Button>
+            <Button href="/buyer/marketplace"> Marketplace</Button>
             <IconButton aria-label="show 4 new mails" color="inherit" href="/buyer/orderSummary">
               {/* CART */}
-              <Badge badgeContent={shoppingCartCount} color="secondary">
+              <Badge badgeContent={cartValue} color="secondary">
                 <ShoppingCartIcon />
               </Badge>
             </IconButton>
