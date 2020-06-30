@@ -202,7 +202,7 @@ export default function NavigatinBar(props) {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton aria-label="show 11 new notifications" color="inherit" href="/orderSummary">
+        <IconButton aria-label="show 11 new notifications" color="inherit" href="/buyer/orderSummary">
           <Badge badgeContent={shoppingCartCount} color="secondary">
             <ShoppingCartIcon />
           </Badge>
@@ -262,7 +262,7 @@ export default function NavigatinBar(props) {
           <div className={classes.sectionDesktop}>
 
             <Button href="marketplace"> Marketplace</Button>
-            <IconButton aria-label="show 4 new mails" color="inherit" href="/orderSummary">
+            <IconButton aria-label="show 4 new mails" color="inherit" href="/buyer/orderSummary">
               {/* CART */}
               <Badge badgeContent={shoppingCartCount} color="secondary">
                 <ShoppingCartIcon />
