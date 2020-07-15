@@ -119,10 +119,6 @@ EnhancedTableHead.propTypes = {
 };
 
 const useToolbarStyles = makeStyles((theme) => ({
-  root: {
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(1),
-  },
   highlight:
     theme.palette.type === 'light'
       ? {
@@ -158,12 +154,13 @@ EnhancedTableToolbar.propTypes = {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: '80%',
-    marginLeft: '10%',
-    marginRight: '10%'
+    width: '70%',
+    marginLeft: '30%', // @todo: Fix this to correct align items 
+    marginRight: '10%',
+    flex: 1 
   },
   paper: {
-    width: '100%',
+    width: '80%',
     marginBottom: theme.spacing(2),
   },
   table: {

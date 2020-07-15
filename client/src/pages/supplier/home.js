@@ -5,10 +5,27 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Hidden from '@material-ui/core/Hidden';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
+import Divider from '@material-ui/core/Divider';
+import Drawer from '@material-ui/core/Drawer';
+import Toolbar from '@material-ui/core/Toolbar';
+import List from '@material-ui/core/List';
+
+
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+
+import PersonIcon from '@material-ui/icons/Person';
+import ContactMailIcon from '@material-ui/icons/ContactMail';
+import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 
 import Content from '../../views/supplier/Content';
 import NavigationBar from '../../components/supplier/NavigationBar'
+import SideBar from '../../components/supplier/SideBar'
 import Footer from '../../components/Footer'
+
+const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
   palette: {
@@ -38,34 +55,25 @@ const useStyles = makeStyles((theme) => ({
       minHeight: 48,
     },
   },
+  // Drawer 
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0,
+  },
+  drawerPaper: {
+    width: drawerWidth,
+  },
+  drawerContainer: {
+    overflow: 'auto',
+  },
+  content: {
+    width: '100%',
+    flexGrow: 1,
+    padding: theme.spacing(4),
+    alignItems: "left",
+  },
 }));
 
-// const styles = {
-//   root: {
-//     display: 'flex',
-//     minHeight: '100vh',
-//   },
-//   drawer: {
-//     [theme.breakpoints.up('sm')]: {
-//       width: drawerWidth,
-//       flexShrink: 0,
-//     },
-//   },
-//   app: {
-//     flex: 1,
-//     display: 'flex',
-//     flexDirection: 'column',
-//   },
-//   main: {
-//     flex: 1,
-//     padding: theme.spacing(6, 4),
-//     background: '#eaeff1',
-//   },
-//   footer: {
-//     padding: theme.spacing(2),
-//     background: '#eaeff1',
-//   },
-// };
 
 function Paperbase(props) {
   const classes = useStyles();
@@ -76,17 +84,37 @@ function Paperbase(props) {
   };
 
   return (
-      <div className={classes.root}>
-        <CssBaseline />
-        <div className={classes.app}>
-          {/* <Header onDrawerToggle={handleDrawerToggle} /> */}
-          <NavigationBar/>
-          <main className={classes.main}>
-            <Content />
-          </main>
-        </div>
+
+    <div className={classes.root}>
+      <CssBaseline />
+      <div className={classes.app}>
+        {/* <Header onDrawerToggle={handleDrawerToggle} /> */}
+        <NavigationBar />
+
+        <Drawer
+          className={classes.drawer}
+          variant="permanent"
+          classes={{
+            paper: classes.drawerPaper,
+          }}
+        >
+          <div className={classes.drawerContainer}>
+            <Divider />
+            <List>
+              <Toolbar />
+              <SideBar />
+            </List>
+          </div>
+        </Drawer>
+        <main className={classes.content}>
+          <Toolbar />
+          <Content />
+        </main>
       </div>
-    
+
+
+    </div>
+
   );
 }
 

@@ -105,22 +105,22 @@ export default function UserProfile() {
     setLoadForm(3)
   }
 
-  const LoadFormFunction = () =>{
-    switch(loadForm) {
+  const LoadFormFunction = () => {
+    switch (loadForm) {
       case 0:
-        return <ProfileForm/>
+        return <ProfileForm />
         break;
       case 1:
-        return <AccountContactForm/>;
+        return <AccountContactForm />;
         break;
       case 2:
-        return <BuyerInformationForm/>
+        return <BuyerInformationForm />
         break;
       case 3:
-        return <DeliverySetupForm/>
+        return <DeliverySetupForm />
         break;
       default:
-        return <AccountContactForm/>;
+        return <AccountContactForm />;
     }
   }
 
@@ -150,7 +150,7 @@ export default function UserProfile() {
       </Drawer>
       <main className={classes.content}>
         <Toolbar />
-        <LoadFormFunction/>
+        <LoadFormFunction />
       </main>
     </div>
   );
