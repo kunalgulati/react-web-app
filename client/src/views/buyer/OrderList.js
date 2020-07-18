@@ -190,7 +190,7 @@ export default function OrderList() {
   return (
     <React.Fragment>
       {/* <Grid container spacing={24} className={classes.root}> */}
-      <Grid spacing={1} className={classes.root}>
+      <Grid className={classes.root}>
         <ListView />
       </Grid>
 
