@@ -12,10 +12,35 @@ const passport = require('passport');
 const UserModel = require('./models/UserModel');
 const cors = require('cors');
 
+// Load Passport
+var Auth0Strategy = require('passport-auth0');
 
-// passport
-const auth = require('./lib/auth');
+// Configure Passport to use Auth0
+var strategy = new Auth0Strategy(
+  {
+    domain: process.env.AUTH0_DOMAIN,
+    clientID: process.env.AUTH0_CLIENT_ID,
+    clientSecret: process.env.AUTH0_CLIENT_SECRET,
+    callbackURL:
+      process.env.AUTH0_CALLBACK_URL || 'http://localhost:3000/buyer/callback'
+  },
+  function (accessToken, refreshToken, extraParams, profile, done) {
+    // accessToken is the token to call Auth0 API (not needed in the most cases)
+    // extraParams.id_token has the JSON Web Token
+    // profile has all the information from the user
+    return done(null, profile);
+  }
+);
 
+passport.use(strategy);
+
+// config express-session
+var sess = {
+  secret: 'CHANGE THIS TO A RANDOM SECRET',
+  cookie: {},
+  resave: false,
+  saveUninitialized: true
+};
 
 
 const port = 3000;
@@ -24,6 +49,9 @@ const app = next({ dev });
 const handle = app.getRequestHandler();
 
 
+
+var router = express.Router();
+
 app.prepare()
   .then(() => {
 
@@ -31,57 +59,72 @@ app.prepare()
     server.use(bodyParser.urlencoded({ extended: true }));
     server.use(cookieParser());
 
-    // server.use(session({
-    //   secret: 'very secrer',
-    //   resave: 'true',
-    //   saveUninitialized: false,
-    //   store: new MongoStore({
-    //     mongooseConnection: mongoose.connection
-    //   })
-    // }))
-
-    server.use(cors());
-
+    
     if (server.get('env') === 'production') {
-      server.set('trust proxy', 'loopback');
-      server.use(session({
-        secret: 'another very secret 12345',
-        name: 'sessionId',
-        proxy: true,
-        cookie: { secure: true },
-        resave: true,
-        saveUninitialized: false,
-        store: new MongoStore({ mongooseConnection: mongoose.connection }),
-      }));
+      sess.cookie.secure = true;
     } else {
-      server.use(session({
-        secret: 'very secret 12345',
-        resave: true,
-        saveUninitialized: false,
-        store: new MongoStore({ mongooseConnection: mongoose.connection }),
-      }));
+      // server.use(session({
+      //   secret: 'another very secret 12345',
+      //   name: 'sessionId',
+      //   proxy: true,
+      //   cookie: { secure: true },
+      //   resave: true,
+      //   saveUninitialized: false,
+      //   store: new MongoStore({ mongooseConnection: mongoose.connection }),
+      // }));
     }
+    
+    // Passport
+    server.use(session(sess));
+    server.use(passport.initialize());
+    server.use(passport.session());
 
-      server.use(auth.initialize);
-      server.use(auth.session);
-      server.use(auth.setUser);
+    // You can use this section to keep a smaller payload
+    passport.serializeUser(function (user, done) {
+      done(null, user);
+    });
 
+    passport.deserializeUser(function (user, done) {
+      done(null, user);
+    });
 
-      server.use(auth.initialize);
-      server.use(auth.session);
-      
       /* ****************************************** BUYER ROUTES ****************************************** */
-      server.get('buyer/login', (req, res) => {
-        return app.render(req, res, 'buyer/login')
-      })
+      // server.get('buyer/login', (req, res) => {
+      //   return app.render(req, res, 'buyer/login')
+      // })
+
+      server.get('/buyer/login', passport.authenticate('auth0', {
+        scope: 'openid email profile'
+      }), function (req, res) {
+        res.redirect('/');
+      });
+
+      // Perform the final stage of authentication and redirect to previously requested URL or '/user'
+      router.get('/buyer/callback', function (req, res, next) {
+        passport.authenticate('auth0', function (err, user, info) {
+          if (err) { return next(err); }
+          if (!user) { 
+            // return res.redirect('/login'); 
+            return app.render(req, res, 'buyer/marketplace')
+          }
+          req.logIn(user, function (err) {
+            if (err) { return next(err); }
+            const returnTo = req.session.returnTo;
+            delete req.session.returnTo;
+            res.redirect(returnTo || '/user');
+          });
+        })(req, res, next);
+      });
+      
+      
       server.get('buyer/profile', (req, res) => {
         return app.render(req, res, 'buyer/profile')
       })
 
-      server.post('buyer/login', passport.authenticate('local', {
-        successRedirect: '/',
-        failureRedirect: '/register'
-      }))
+      // server.post('buyer/login', passport.authenticate('local', {
+      //   successRedirect: '/',
+      //   failureRedirect: '/register'
+      // }))
 
       server.get('buyer/marketplace', (req, res) => {
         return app.render(req, res, 'buyer/marketplace')
