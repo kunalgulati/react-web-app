@@ -15,6 +15,10 @@ const cors = require('cors');
 // Load Passport
 var Auth0Strategy = require('passport-auth0');
 
+var util = require('util');
+var url = require('url');
+var querystring = require('querystring');
+
 // Configure Passport to use Auth0
 var strategy = new Auth0Strategy(
   {
@@ -100,22 +104,44 @@ app.prepare()
       });
 
       // Perform the final stage of authentication and redirect to previously requested URL or '/user'
-      router.get('/buyer/callback', function (req, res, next) {
-        passport.authenticate('auth0', function (err, user, info) {
-          if (err) { return next(err); }
-          if (!user) { 
-            // return res.redirect('/login'); 
-            return app.render(req, res, 'buyer/marketplace')
-          }
-          req.logIn(user, function (err) {
-            if (err) { return next(err); }
-            const returnTo = req.session.returnTo;
-            delete req.session.returnTo;
-            res.redirect(returnTo || '/user');
-          });
-        })(req, res, next);
-      });
+      // router.get('/buyer/callback', function (req, res, next) {
+      //   passport.authenticate('auth0', function (err, user, info) {
+      //     if (err) { return next(err); }
+      //     if (!user) { 
+      //       // return res.redirect('/login'); 
+      //       return app.render(req, res, 'buyer/marketplace')
+      //     }
+      //     req.logIn(user, function (err) {
+      //       if (err) { return next(err); }
+      //       const returnTo = req.session.returnTo;
+      //       delete req.session.returnTo;
+      //       res.redirect(returnTo || '/user');
+      //     });
+      //   })(req, res, next);
+      // });
       
+
+      // Perform session logout and redirect to homepage
+      server.get('/buyer/logout', (req, res) => {
+        req.logout();
+
+        var returnTo = req.protocol + '://' + req.hostname;
+        var port = req.connection.localPort;
+        if (port !== undefined && port !== 80 && port !== 443) {
+          returnTo += ':' + port;
+        }
+        var logoutURL = new url.URL(
+          util.format('https://%s/v2/logout', process.env.AUTH0_DOMAIN)
+        );
+        var searchString = querystring.stringify({
+          client_id: process.env.AUTH0_CLIENT_ID,
+          returnTo: returnTo
+        });
+        logoutURL.search = searchString;
+
+        res.redirect(logoutURL);
+      });
+
       
       server.get('buyer/profile', (req, res) => {
         return app.render(req, res, 'buyer/profile')

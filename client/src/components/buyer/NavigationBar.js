@@ -163,6 +163,12 @@ export default function NavigatinBar(props) {
     })
   };
 
+  const handleLogout = ()=>{
+    Router.push({ 
+      pathname: '/buyer/logout',
+    })
+  }
+
   /** GraphQL Hooks */
   const getCartQuantity = (currentUserId) => {
     const { loading, error, data } = useQuery(GET_CART_ITEM_QUANTITY, {
@@ -202,7 +208,7 @@ export default function NavigatinBar(props) {
       <MenuItem onClick={handleMenuProfileClick}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>Help</MenuItem>
       <Divider />
-      <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
+      <MenuItem onClick={handleLogout}>Logout</MenuItem>
 
     </Menu>
   );
