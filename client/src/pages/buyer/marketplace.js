@@ -12,7 +12,6 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Divider from '@material-ui/core/Divider';
-import FilterBar from '../../components/buyer/FilterBar'
 import Footer from '../../components/Footer'
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
@@ -23,8 +22,13 @@ import Typography from '@material-ui/core/Typography';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 
 import NavigationBar from '../../components/buyer/NavigationBar'
+import FilterBar from '../../components/buyer/FilterBar'
+import SideBar from '../../components/buyer/MarketplaceSideBar'
+
 import Router from 'next/router';
 import ViewProduct from './viewProduct'
+
+
 
 /** GraphQl Query */
 import { Query, Mutation } from 'react-apollo'
@@ -116,37 +120,6 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-
-/** Get a List of all avialable Products in the market Place from the Product Table*/
-
-// function ProductCardDetailList(props) {
-//   const classes = useStyles();
-
-//   return (
-//     // <Grid item xs={12} md={6}>
-//     <Grid>
-//       <div className={classes.cardList}>
-//         <List>
-//           <ListItem className={classes.listDetailText }>
-//             <ListItemText primary={
-//               <Typography 
-//                 variant="subtitle1" 
-//                 align="left" 
-//                 style={{display: 'inline-block'}}>
-//                 {`Price: $${ props.price }`}</Typography>
-//               } />
-//           </ListItem>
-//           <ListItem className={classes.listDetailText}>
-//             <ListItemText primary={<Typography>{"Min. Quantity: " + props.min_quantity}</Typography>} />
-//           </ListItem>
-//           <ListItem>
-//             <ListItemText primary={<Typography>{"Origin " + props.origin}</Typography>} />
-//           </ListItem>
-//         </List>
-//       </div>
-//     </Grid>
-//   );
-// };
 
 /** Source: https://stackoverflow.com/questions/51369784/next-js-redirect-inside-of-graphql-mutation */
 function handleViewProduct(card){
@@ -261,11 +234,11 @@ export default function Album() {
     </Query>
   );
 
-
   return (
     <React.Fragment>
       <CssBaseline />
       <NavigationBar userId={"5edab39c6c09ee1e30cae600"}/>
+      <SideBar />
       
       <main>
         <FilterBar />
