@@ -3,14 +3,10 @@ const next = require('next');
 const config = require('./config')[process.env.NODE_ENV || 'development']
 
 const db = require('./lib/db');
-const mongoose = require('mongoose');
 const session = require('express-session')
-const MongoStore = require('connect-mongo')(session);
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser')
 const passport = require('passport');
-const UserModel = require('./models/UserModel');
-const cors = require('cors');
 
 // Load Passport
 var Auth0Strategy = require('passport-auth0');
@@ -20,9 +16,9 @@ var userRouter  =   require('./lib/routes/buyer/user');
 var orderRouter =  require('./lib/routes/buyer/order');
 var productRouter =  require('./lib/routes/buyer/product');
 
-var util = require('util');
-var url = require('url');
-var querystring = require('querystring');
+// var util = require('util');
+// var url = require('url');
+// var querystring = require('querystring');
 
 // Configure Passport to use Auth0
 var strategy = new Auth0Strategy(
