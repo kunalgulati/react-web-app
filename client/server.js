@@ -15,10 +15,10 @@ const cors = require('cors');
 // Load Passport
 var Auth0Strategy = require('passport-auth0');
 
-var secured = require('./lib/middleware/secured');
-
-
-var authRouter =  require('./lib/routes/buyer/auth')
+var authRouter =  require('./lib/routes/buyer/auth');
+var userRouter  =   require('./lib/routes/buyer/user');
+var orderRouter =  require('./lib/routes/buyer/order');
+var productRouter =  require('./lib/routes/buyer/product');
 
 var util = require('util');
 var url = require('url');
@@ -89,82 +89,34 @@ app.prepare()
       done(null, user);
     });
 
-    /* ****************************************** BUYER ROUTES ****************************************** */
+    /** 
+     * Routes in the following file: (Buyer)
+        * Login, Logout, callback
+    */
+    server.use('/', authRouter);
+    
+    /** 
+     * Routes in the following file: (Buyer)
+        * Profile
+    */
+    server.use('/', userRouter);
+    
+    /** 
+     * Routes in the following file:
+        * Marketplace, ViewProduct
+    */
+    server.use('/', productRouter);
 
-    server.use('/', authRouter)
-    // server.get('/buyer/login', passport.authenticate('auth0', {
-    //   scope: 'openid email profile'
-    // }), function (req, res) {
-    //   res.redirect('/');
-    // });
+    /** 
+     * Routes in the following file:
+        * Orders, OrderSummary
+    */
+    server.use('/', orderRouter);
+    
+    
 
-    // // Perform the final stage of authentication and redirect to previously requested URL or '/user'
-    // server.get('/buyer/callback', function (req, res, next) {
-    //   passport.authenticate('auth0', function (err, user, info) {
-    //     if (err) { return next(err); }
-    //     if (!user) { return res.redirect('/buyer/login'); }
-    //     req.logIn(user, function (err) {
-    //       if (err) { return next(err); }
-    //       const returnTo = req.session.returnTo;
-    //       delete req.session.returnTo;
-    //       res.redirect(returnTo || '/marketplace');
-    //     });
-    //   })(req, res, next);
-    // });
+  
 
-    // // Perform session logout and redirect to homepage
-    // server.get('/buyer/logout', (req, res) => {
-    //   req.logout();
-
-    //   var returnTo = req.protocol + '://' + req.hostname;
-    //   var port = req.connection.localPort;
-    //   if (port !== undefined && port !== 80 && port !== 443) {
-    //     returnTo += ':' + port;
-    //   }
-    //   var logoutURL = new url.URL(
-    //     util.format('https://%s/v2/logout', process.env.AUTH0_DOMAIN)
-    //   );
-    //   var searchString = querystring.stringify({
-    //     client_id: process.env.AUTH0_CLIENT_ID,
-    //     returnTo: returnTo
-    //   });
-    //   logoutURL.search = searchString;
-
-    //   res.redirect(logoutURL);
-    // });
-
-    /**
-     * GET Buyer User profile 
-     * Secured() checks if the user is logged in 
-     * */ 
-    server.get('buyer/profile', secured(), (req, res) => {
-      return app.render(req, res, 'buyer/profile')
-    })
-
-    // server.post('buyer/login', passport.authenticate('local', {
-    //   successRedirect: '/',
-    //   failureRedirect: '/register'
-    // }))
-
-    server.get('buyer/marketplace', (req, res) => {
-      return app.render(req, res, 'buyer/marketplace')
-    })
-
-    server.get('buyer/register', (req, res) => {
-      return app.render(req, res, 'buyer/register')
-    })
-
-    server.get('buyer/orderSummary', (req, res) => {
-      return app.render(req, res, 'buyer/orderSummary')
-    })
-    server.get('buyer/orders', (req, res) => {
-      return app.render(req, res, 'buyer/viewProduct')
-    })
-
-    // Delete
-    server.get('buyer/viewProduct', (req, res) => {
-      return app.render(req, res, 'buyer/viewProduct')
-    })
 
     /* ****************************************** SUPPLIER ROUTES ****************************************** */
     server.get('supplier/register', (req, res) => {

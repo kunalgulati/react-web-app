@@ -10,28 +10,28 @@ var router = express.Router();
 dotenv.config();
 
 // Perform the login, after login Auth0 will redirect to callback
-router.get('/login', passport.authenticate('auth0', {
+router.get('/buyer/login', passport.authenticate('auth0', {
   scope: 'openid email profile'
 }), function (req, res) {
   res.redirect('/');
 });
 
 // Perform the final stage of authentication and redirect to previously requested URL or '/user'
-router.get('/callback', function (req, res, next) {
+router.get('/buyer/callback', function (req, res, next) {
   passport.authenticate('auth0', function (err, user, info) {
     if (err) { return next(err); }
-    if (!user) { return res.redirect('/login'); }
+    if (!user) { return res.redirect('/buyer/login'); }
     req.logIn(user, function (err) {
       if (err) { return next(err); }
       const returnTo = req.session.returnTo;
       delete req.session.returnTo;
-      res.redirect(returnTo || '/user');
+      res.redirect(returnTo || '/marketplace');
     });
   })(req, res, next);
 });
 
 // Perform session logout and redirect to homepage
-router.get('/logout', (req, res) => {
+router.get('/buyer/logout', (req, res) => {
   req.logout();
 
   var returnTo = req.protocol + '://' + req.hostname;
@@ -39,7 +39,6 @@ router.get('/logout', (req, res) => {
   if (port !== undefined && port !== 80 && port !== 443) {
     returnTo += ':' + port;
   }
-
   var logoutURL = new url.URL(
     util.format('https://%s/v2/logout', process.env.AUTH0_DOMAIN)
   );
