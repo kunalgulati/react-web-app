@@ -1,12 +1,7 @@
-const bcrypt = require('bcryptjs')
 const Users = require('../models/UserModel').Users;
 const Products = require('../models/ProductModel').Products;
 const OrderCartItems = require('../models/OrderCartModel').OrderCartItems;
 const mongoose = require('mongoose');
-const { map } = require('lodash');
-
-// heigher the number, higher will be the time to calculate the hash 
-var saltRounds = 10;
 
 
 const resolvers = {
@@ -17,39 +12,29 @@ const resolvers = {
     getUsers: () => {
       return Users.find();
     },
-    getUser: (parent, args, context, info) => {
-      var user = Users.find({ email: args.email });
+    getUser: (parent, args) => {
+      const user = Users.find({ email: args.email });
       if (!user) { return null; }
       else { return user }
     },
     getAllProducts: () => {
       return Products.find();
     },
-    getProduct: (parent, args, context, info) => {
-      // return new Promise((resolve, reject) => {
-      //   // Products.findById(mongoose.Types.ObjectId(args.productId), 
-      //   Products.find({_id: mongoose.Types.ObjectId(args.productId) },
-      //     async (err, data) =>{
-      //       console.log(data);
-      //       if(err) reject(err);
-      //       else resolve([].push(data));
-      //     }
-      //   )}
-      // );
+    getProduct: (parent, args) => {
       return Products.find({ _id: mongoose.Types.ObjectId(args.productId) })
     },
     // Cart
-    getOrderCartItems: (parent, args, context, info) => {
-      let orderCartItem = OrderCartItems.find({ user_id: mongoose.Types.ObjectId(args.userId) });
+    getOrderCartItems: (parent, args) => {
+      const orderCartItem = OrderCartItems.find({ user_id: mongoose.Types.ObjectId(args.userId) });
       if (!orderCartItem) { return null; }
       else { return orderCartItem }
     },
-    getOrderSummaryProduct: (parent, args, context, info) => {
+    getOrderSummaryProduct: (parent, args) => {
       /** 
        * 1. Fetch the products under the user name 
        * 2. Get associated product details for those Cart Items and make a map
       */
-      let productMap = new Map();
+      const productMap = new Map();
 
       const makeProductMap = async (orderCartItem) => {orderCartItem.map(eachItem => { productMap.set(eachItem.product_id, eachItem)})};
       const getCartItems = async (userId) =>{
@@ -63,53 +48,15 @@ const resolvers = {
         });
       }
 
-      let allItem = getCartItems(args.userId);
+      const allItem = getCartItems(args.userId);
        makeProductMap(allItem);
       getProductInformation();
-      
-
-      // var orderCartItem = OrderCartItems.find({ user_id: mongoose.Types.ObjectId(args.userId) }, (err, orderCartItem) => {
-      //   if (!orderCartItem) { return null; }
-      //   // else { return orderCartItem }
-      //   console.log(orderCartItem)
-      //   // var productIds = [];
-      //   // for(var i=0; i<orderCartItem.length; i++ ){
-      //   //   productIds.push(orderCartItem[i].product_id);
-      //   // }
-      //   combine(orderCartItem);
-      // });
-
-      // var orderCartItem = OrderCartItems.find({ user_id: mongoose.Types.ObjectId(args.userId) });
-      //   if (!orderCartItem) { return null; }
-      //   else {
-      //     // console.log(orderCartItem)
-      //     var productIds = [];
-      //     for(var i=0; i<orderCartItem.length; i++ ){
-      //       productIds.push(orderCartItem[i].product_id);
-      //     }
-      //     console.log(productIds.toString());
-      //     // Find the related products 
-      //     if(productIds !== []){
-      //     }
-      //     console.log(temp);
-      //     return null;
-
-      //     return new Promise((resolve, reject) => {
-      //       Products.where('_id').in(productIds).exec((err, data) => {
-      //         if (err) reject(err)
-      //         else resolve(data)
-      //       })
-      //     }) 
-      //   }
       return null;
-
-
-
     }
   },
   Mutation: {
     /** **************************************** User **************************************** */
-    createUser: (parent, args, context, info) => {
+    createUser: (parent, args) => {
       const newUser = new Users({
         email: args.email,
         password: args.password,
@@ -131,7 +78,7 @@ const resolvers = {
     updateUser: (root, { input }) => {
       //WRONG
       //TODO
-      return new Promise((resolve, object) => {
+      return new Promise((resolve, reject) => {
         Users.findOneAndUpdate({ _id: input.id }, input, { new: true },
           (err, friend) => {
             if (err) reject(err)
@@ -140,7 +87,7 @@ const resolvers = {
       })
     },
     /** ************************************** Product **************************************** */
-    createProduct: (parent, args, context, info) => {
+    createProduct: (parent, args) => {
       const newProduct = new Products({
         title: args.title,
         description: args.description,
@@ -171,7 +118,7 @@ const resolvers = {
       })
     },
     /** ************************************* Order Cart **************************************** */
-    addProductCart: (parent, args, context, info) => {
+    addProductCart: (parent, args) => {
       const filter = {
         $and: [
           { user_id: mongoose.Types.ObjectId(args.userId) },
