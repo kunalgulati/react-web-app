@@ -9,20 +9,15 @@ const MongoStore = require('connect-mongo')(session);
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser')
 const passport = require('passport');
-const UserModel = require('./models/UserModel');
 const cors = require('cors');
-
 
 // passport
 const auth = require('./lib/auth');
-
-
 
 const port = 3000;
 const dev = 'development';
 const app = next({ dev });
 const handle = app.getRequestHandler();
-
 
 app.prepare()
   .then(() => {
@@ -116,10 +111,6 @@ app.prepare()
       server.get('supplier/viewProduct', (req, res) => {
         return app.render(req, res, 'supplier/viewProduct')
       })
-
-
-
-
 
       server.get('*', (req, res) => {
         return handle(req, res);

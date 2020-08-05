@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -27,4 +27,4 @@ export default function Footer() {
       <Copyright />
     </footer>
   )
-};
+}

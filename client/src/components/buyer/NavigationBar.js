@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -8,11 +8,8 @@ import InputBase from '@material-ui/core/InputBase';
 import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import MailIcon from '@material-ui/icons/Mail';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Button from '@material-ui/core/Button';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
@@ -102,27 +99,25 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-var CartItemCount = (id) => {
-  const { data, loading, error } = useQuery(GET_CART_ITEM_QUANTITY,
-    {
-      variables: {
-        userId: id
-      }
-    }
-  );
+// var CartItemCount = (id) => {
+//   const { data, loading, error } = useQuery(GET_CART_ITEM_QUANTITY,
+//     {
+//       variables: {
+//         userId: id
+//       }
+//     }
+//   );
 
-  // if (loading) return console.log("Loading");
-  if (error) return <p>ERROR</p>;
-  if (!data) return <p>Not found</p>;
-  var count = 0;
-  for (var i = 0; i < data.getOrderCartItems.length; i++) {
-    count += data.getOrderCartItems[i].quantity;
-  };
+//   // if (loading) return console.log("Loading");
+//   if (error) return <p>ERROR</p>;
+//   if (!data) return <p>Not found</p>;
+//   var count = 0;
+//   for (var i = 0; i < data.getOrderCartItems.length; i++) {
+//     count += data.getOrderCartItems[i].quantity;
+//   };
 
-  return count;
-};
-
-
+//   return count;
+// };
 
 export default function NavigatinBar(props) {
   const classes = useStyles();
@@ -176,14 +171,15 @@ export default function NavigatinBar(props) {
     if (!data) return 0;
     
     let count = 0;
-    for (var i = 0; i < data.getOrderCartItems.length; i++) {
+    for (let i = 0; i < data.getOrderCartItems.length; i++) {
       count += data.getOrderCartItems[i].quantity;
-    };
+    }
   
     return count;
   }
 
-  var cartValue = getCartQuantity(props.userId);
+  // eslint-disable-next-line react/prop-types
+  const cartValue = getCartQuantity(props.userId);
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
@@ -242,10 +238,12 @@ export default function NavigatinBar(props) {
   );
   
   // when using drawer, Need to change Nav bar Position to "fixed", otherwise, keep "relative"
-  var navbarPosition = "relative";
+  let navbarPosition = "relative";
+  // eslint-disable-next-line react/prop-types
   if(props.position === undefined){
     navbarPosition = "relative";
   } else{
+    // eslint-disable-next-line react/prop-types
     navbarPosition = props.position;
   }
 

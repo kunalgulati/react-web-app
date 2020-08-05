@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
@@ -17,11 +16,9 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
-import FormLabel from '@material-ui/core/FormLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import Checkbox from '@material-ui/core/Checkbox';
 
 const drawerWidth = 240;
@@ -59,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
   },
   // CheckBox
   formControl: {
-    margin: theme.spacing(0),    
+    margin: theme.spacing(0),
   },
 }));
 
@@ -75,10 +72,10 @@ function ResponsiveDrawer(props) {
 
   // CheckBoxes
   const GradeCheckbox = (whichList) => {
-    var t ={ 
-      apple:true, 
-      appricot: true, 
-      bannana: false, 
+    const t = {
+      apple: true,
+      appricot: true,
+      bannana: false,
       mango: false
     }
     const [state, setState] = React.useState(t);
@@ -89,16 +86,13 @@ function ResponsiveDrawer(props) {
       console.log(event.target.name)
     };
 
-    // const { gilad, jason, antoine } = state;
-    // const error = [gilad, jason, antoine].filter((v) => v).length !== 2;
-    
-    var commodityData = ['Apple', 'Appricot', 'Bannana', 'Mango'];
-    var certificateData = ['Organic', 'Non-Organic'];
-    var gradeData = ['Grade A', 'Grade B'];
-    var gradeData = ['Box', 'Carton'];
+    const commodityData = ['Apple', 'Appricot', 'Bannana', 'Mango'];
+    const certificateData = ['Organic', 'Non-Organic'];
+    const gradeData = ['Grade A', 'Grade B'];
+    const boxTypeData = ['Box', 'Carton'];
 
-    var data = [];
-    var expr = whichList.whichList;
+    let data = [];
+    const expr = whichList.whichList;
     switch (expr) {
       case 'Commodity':
         data = commodityData;
@@ -110,33 +104,33 @@ function ResponsiveDrawer(props) {
         data = gradeData;
         break;
       case 'Package Type':
-          data = gradeData;
-          break;
+        data = boxTypeData;
+        break;
       default:
         data = [];
     }
 
     return (
-        <div className={classes.root}>
-          <FormControl component="fieldset" className={classes.formControl}>
-            <FormGroup>
+      <div className={classes.root}>
+        <FormControl component="fieldset" className={classes.formControl}>
+          <FormGroup>
             {
               data.map((text, index) => (
                 <FormControlLabel key={`form-${text}`}
-                control={
-                  // <Checkbox checked={gilad} onChange={handleChange} name={text} />
-                  <Checkbox onChange={handleChange} name={text} />
-                }
-                label={text}
-              />
-            ))}
-            </FormGroup>
-          </FormControl>
-        </div>
+                  control={
+                    // <Checkbox checked={gilad} onChange={handleChange} name={text} />
+                    <Checkbox onChange={handleChange} name={text} />
+                  }
+                  label={text}
+                />
+              ))}
+          </FormGroup>
+        </FormControl>
+      </div>
     );
   };
 
-  
+
   const drawer = (
     <div>
       <div className={classes.toolbar} />
@@ -144,13 +138,13 @@ function ResponsiveDrawer(props) {
       <List>
         {['Commodity', 'Certificate', 'Grade', 'Package Type'].map((text, index) => (
           <div>
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-          <ListItem key={text} divider>
-            <GradeCheckbox whichList={text}/>
-          </ListItem>
+            <ListItem button key={text}>
+              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+            <ListItem key={text} divider>
+              <GradeCheckbox whichList={text} />
+            </ListItem>
           </div>
         ))}
       </List>
@@ -209,7 +203,7 @@ function ResponsiveDrawer(props) {
           </Drawer>
         </Hidden>
       </nav>
-      
+
 
     </div>
   );

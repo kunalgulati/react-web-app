@@ -5,26 +5,12 @@ import ListItemText from '@material-ui/core/ListItemText';
 // import Router from 'next/router';
 
 import PersonIcon from '@material-ui/icons/Person';
-import ContactMailIcon from '@material-ui/icons/ContactMail';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import AssessmentIcon from '@material-ui/icons/Assessment';
 import CategoryIcon from '@material-ui/icons/Category';
 
-
-
-
-const drawerWidth = 240;
-
-
-function SideBar(props) {
-
-  const handleMyProduct = () =>{
-    // Router.push({ 
-    //   pathname: '/supplier/home',
-    // })
-  }
-
+function SideBar() {
   return (
     <React.Fragment>
       <ListItem button onClick={console.log("todo")}>

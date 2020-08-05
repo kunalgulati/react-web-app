@@ -42,7 +42,7 @@ const styles = (theme) => ({
 
 function ProductHero(props) {
   const { classes } = props;
-  const [spacing, setSpacing] = React.useState(2);
+  // const [spacing, setSpacing] = React.useState(2);
 
   return (
     <ProductHeroLayout backgroundClassName={classes.background}>
@@ -53,8 +53,6 @@ function ProductHero(props) {
       <Typography color="inherit" align="center" variant="h5" className={classes.h5}>
         Source Rescued Food from Forkcha for your Production Unit
       </Typography>
-
-
 
       <Grid container justify="center" spacing={3}>
         <Grid item>

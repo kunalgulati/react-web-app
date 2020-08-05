@@ -1,3 +1,4 @@
+import React from 'react';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -16,6 +17,31 @@ const useStyles = makeStyles((theme) => ({
 export default function ProfileForm(){
   const classes = useStyles();
 
+  /** ***************************************** @TODO: IMPLEMENT THESE FUNCTION ********************************************* */
+  const setFirstName = () => {
+    console.log("@TODO");
+  }
+
+  const setLastName = () => {
+    console.log("@TODO");
+  }
+
+  const setEmail = () => {
+    console.log("@TODO");
+  }
+
+  const setPassword = () => {
+    console.log("@TODO");
+  };
+
+  const setPhoneNumber = () => {
+    console.log("@TODO");
+  }
+
+  const setCompanyName = () => {
+    console.log("@TODO");
+  };
+  
   return (
     <React.Fragment>
       <Typography variant="h5" align="left">User Profile Contact</Typography>

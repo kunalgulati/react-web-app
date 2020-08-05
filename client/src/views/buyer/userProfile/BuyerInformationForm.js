@@ -1,3 +1,4 @@
+import React from 'react';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -14,6 +15,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function ProfileForm(){
   const classes = useStyles();
+
+  const setBuyerName = () => {
+    console.log("TODO")
+  }
+
+  const setPhoneNumber = () => {
+    console.log("TODO")
+  }
+  
+  const setEmail = () => {
+    console.log("TODO")
+  }
 
   return (
     <React.Fragment>
