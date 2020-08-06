@@ -1,21 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
-import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import MailIcon from '@material-ui/icons/Mail';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Button from '@material-ui/core/Button';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import Divider from '@material-ui/core/Divider'
 
 /** GraphQl Query */
@@ -123,7 +118,7 @@ export default function NavigatinBar(props) {
   const handleMenuProfileClick = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
-    Router.push({ 
+    Router.push({
       pathname: '/profile',
     })
   };
@@ -132,8 +127,8 @@ export default function NavigatinBar(props) {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
-  const handleForkchaClick = () =>{
-    Router.push({ 
+  const handleForkchaClick = () => {
+    Router.push({
       pathname: '/supplier/home',
     })
   };
@@ -185,12 +180,12 @@ export default function NavigatinBar(props) {
       </MenuItem>
     </Menu>
   );
-  
+
   // when using drawer, Need to change Nav bar Position to "fixed", otherwise, keep "relative"
   var navbarPosition = "relative";
-  if(props.position === undefined){
+  if (props.position === undefined) {
     navbarPosition = "relative";
-  } else{
+  } else {
     navbarPosition = props.position;
   }
 
@@ -206,9 +201,9 @@ export default function NavigatinBar(props) {
             aria-label="open drawer"
           >
           </IconButton>
-          <MenuItem onClick={handleForkchaClick}> 
-            <Typography className={classes.title} variant="h6" noWrap> ForkCha </Typography> 
-          </MenuItem>  
+          <MenuItem onClick={handleForkchaClick}>
+            <Typography className={classes.title} variant="h6" noWrap> ForkCha </Typography>
+          </MenuItem>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />

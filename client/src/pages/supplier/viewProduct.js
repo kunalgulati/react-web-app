@@ -1,15 +1,6 @@
-import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Container from '@material-ui/core/Container';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
-import Divider from '@material-ui/core/Divider';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
-import Typography from '@material-ui/core/Typography';
 import { withRouter } from 'next/router';
 
 import Footer from '../../components/Footer'
@@ -17,8 +8,6 @@ import NavigationBar from '../../components/supplier/NavigationBar'
 import ViewProductContent from '../../views/buyer/ViewProductContent'
 
 /** GraphQl Query */
-import gql from 'graphql-tag'
-import { useQuery } from "@apollo/react-hooks";
 
 
 // const GET_PRODUCT_DETAIL_QUERY = gql`

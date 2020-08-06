@@ -5,7 +5,6 @@ import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
@@ -15,12 +14,8 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
 /** GraphQl Query */
-import { Query, Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
-
 import { useMutation } from '@apollo/react-hooks';
-
-
 
 /** ************************************  Mutation  ************************************ */
 const ADD_ITEM_TO_CART = gql`
@@ -65,11 +60,12 @@ const useStyles = makeStyles((theme) => ({
 
 const ProductDescription = (productData) => {
   /** Hooks  */
+  // eslint-disable-next-line no-unused-vars
   const [addItemCart, { itemData }] = useMutation(ADD_ITEM_TO_CART);
 
   const classes = useStyles();
 
-  let data = productData.productData;
+  const data = productData.productData;
 
   const gmoText = (gmoBooleanValue) => {
     if (gmoBooleanValue === true) { return "No" }
@@ -255,9 +251,7 @@ const ProductDescription = (productData) => {
             </ListItem>
           </List>
         </Grid>
-
       </Grid>
-
     </Grid>
   )
 };
@@ -273,15 +267,4 @@ export default function ViewProductContent(props) {
       </Container>
     </React.Fragment>
   );
-};
-
-
-
-
-/** 
- * TODO: 
-    * 1. Make user Id Dynamic for Add Item to Cart mutation
-    * 2. 
-    * 
- * 
-*/
+}

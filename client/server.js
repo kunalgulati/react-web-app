@@ -44,7 +44,6 @@ const dev = 'development';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
-
 app.prepare()
   .then(() => {
 
@@ -127,10 +126,6 @@ app.prepare()
     server.get('supplier/viewProduct', (req, res) => {
       return app.render(req, res, 'supplier/viewProduct')
     })
-
-
-
-
 
     server.get('*', (req, res) => {
       return handle(req, res);

@@ -3,11 +3,8 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
-import Paper from '@material-ui/core/Paper';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Toolbar from '@material-ui/core/Toolbar';
-import Button from '@material-ui/core/Button';
-
 
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -50,7 +47,6 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     padding: theme.spacing(4),
     alignItems: "left",
-
   },
 }));
 
@@ -109,16 +105,16 @@ export default function UserProfile() {
     switch (loadForm) {
       case 0:
         return <ProfileForm />
-        break;
+      // break;
       case 1:
         return <AccountContactForm />;
-        break;
+      // break;
       case 2:
         return <BuyerInformationForm />
-        break;
+      // break;
       case 3:
         return <DeliverySetupForm />
-        break;
+      // break;
       default:
         return <AccountContactForm />;
     }

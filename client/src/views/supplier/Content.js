@@ -72,7 +72,7 @@ const headCells = [
 ];
 
 function EnhancedTableHead(props) {
-  const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
+  const { classes, order, orderBy, onRequestSort } = props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -237,7 +237,7 @@ export default function EnhancedTable() {
 
 
   // New Functions
-  const handleViewProductClick = (eve)=>{
+  const handleViewProductClick = ()=>{
     Router.push({ 
       pathname: '/supplier/viewProduct',
       // query: { productId: "5edab9b6bc81e02209015140",
