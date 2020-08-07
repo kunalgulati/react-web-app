@@ -168,7 +168,7 @@ function ResponsiveDrawer(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Responsive drawer
+            {/* Responsive drawer */}
           </Typography>
         </Toolbar>
       </AppBar>
